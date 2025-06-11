@@ -1,0 +1,64 @@
+[
+  {
+    "id": "field-001",
+    "name": "Sân Thống Nhất",
+    "address": "1 Lý Thường Kiệt, Q.10, TP.HCM",
+    "imageURL": "https://example.com/images/field1.jpg",
+    "availableTimeSlots": [
+      { "startTime": "06:00", "endTime": "07:00", "price": "150000" },
+      { "startTime": "07:00", "endTime": "08:00", "price": "150000" },
+      { "startTime": "08:00", "endTime": "09:00", "price": "170000" }
+    ],
+    "latitude": "10.7725",
+    "longitude": "106.6583"
+  },
+  {
+    "id": "field-002",
+    "name": "Sân Kỳ Hòa",
+    "address": "238 Ba Tháng Hai, Q.10, TP.HCM",
+    "imageURL": "https://example.com/images/field2.jpg",
+    "availableTimeSlots": [
+      { "startTime": "09:00", "endTime": "10:00", "price": "160000" },
+      { "startTime": "10:00", "endTime": "11:00", "price": "160000" }
+    ],
+    "latitude": "10.7729",
+    "longitude": "106.6761"
+  },
+  {
+    "id": "field-003",
+    "name": "Sân Phú Thọ",
+    "address": "219 Lý Thường Kiệt, Q.11, TP.HCM",
+    "imageURL": "https://example.com/images/field3.jpg",
+    "availableTimeSlots": [
+      { "startTime": "17:00", "endTime": "18:00", "price": "200000" },
+      { "startTime": "18:00", "endTime": "19:00", "price": "220000" }
+    ],
+    "latitude": "10.7702",
+    "longitude": "106.6597"
+  },
+  {
+    "id": "field-004",
+    "name": "Sân Gia Định",
+    "address": "2 Nơ Trang Long, Bình Thạnh, TP.HCM",
+    "imageURL": "https://example.com/images/field4.jpg",
+    "availableTimeSlots": [
+      { "startTime": "06:00", "endTime": "07:00", "price": "140000" },
+      { "startTime": "07:00", "endTime": "08:00", "price": "150000" },
+      { "startTime": "08:00", "endTime": "09:00", "price": "160000" }
+    ],
+    "latitude": "10.8123",
+    "longitude": "106.6890"
+  },
+  {
+    "id": "field-005",
+    "name": "Sân Tân Bình",
+    "address": "448 Hoàng Văn Thụ, Tân Bình, TP.HCM",
+    "imageURL": "https://example.com/images/field5.jpg",
+    "availableTimeSlots": [
+      { "startTime": "19:00", "endTime": "20:00", "price": "250000" },
+      { "startTime": "20:00", "endTime": "21:00", "price": "250000" }
+    ],
+    "latitude": "10.8001",
+    "longitude": "106.6628"
+  }
+]

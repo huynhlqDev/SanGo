@@ -11,10 +11,11 @@ import SwiftData
 struct HomeView: View {
 //    @Environment(\.modelContext) private var modelContext
 //    @Query private var items: [FootballField]
+    @StateObject private var searchViewModel = SearchViewModel()
 
     var body: some View {
         TabView {
-            SearchView()
+            SearchView(viewModel: searchViewModel)
                 .tabItem {
                     Label("Tìm kiếm", systemImage: "magnifyingglass")
                 }
@@ -27,7 +28,6 @@ struct HomeView: View {
                     Label("Tài khoản", systemImage: "person.crop.circle")
                 }
         }
-
     }
 }
 

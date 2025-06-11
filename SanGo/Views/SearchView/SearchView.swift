@@ -32,7 +32,7 @@ struct SearchView: View {
                         FilterChip(filterType: .address, selection: $selectedArea)
                         FilterChip(filterType: .time, selection: $selectedTime)
                         FilterChip(filterType: .fieldType, selection: $selectedType)
-                        FilterChip(filterType: .time, selection: $selectedPrice)
+                        FilterChip(filterType: .price, selection: $selectedPrice)
                     }
                     .padding(.horizontal)
                 }

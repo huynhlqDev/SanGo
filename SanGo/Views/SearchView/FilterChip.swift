@@ -28,11 +28,11 @@ enum FilterType {
     var options: [String] {
         switch self {
         case .address:
-            return [ "Da Nang", "Hue", "Hanoi", "Ho Chi Minh"]
+            return ["Da Nang", "Hue", "Hanoi", "Ho Chi Minh"]
         case .time:
             return generateTimeSlots()
         case .price:
-            return ["Any price", "100-200", "200 - 300", "300 - 400", "> 400"]
+            return ["Giá","100k - 200k", "200k - 300k", "300k - 400k", "> 400k"]
         case .fieldType:
             return ["sân 5", "sân 7"]
         }

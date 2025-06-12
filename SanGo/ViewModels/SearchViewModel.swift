@@ -11,36 +11,102 @@ import Combine
 import CoreLocation
 //import FirebaseFirestore
 
+// MARK: ENUM
+enum SearchViewMode {
+    case list
+    case map
+}
+
 class SearchViewModel: ObservableObject {
-    // Input từ UI
-    @Published var searchText: String = ""
-    @Published var selectedDistrict: String?
-    @Published var selectedTimeSlot: String?
-    @Published var selectedType: String?
-    @Published var maxPrice: Int?
-
-    // Output
-    @Published var fields: [FieldModel] = []
-
+    // MARK: PROPERTIES
     private var cancellables = Set<AnyCancellable>()
-//    private let db = Firestore.firestore()
+    //private let db = Firestore.firestore()
+
+    // INPUT FROM UI
+    @Published var displayMode: SearchViewMode = .list
+    @Published var searchText: String = ""
+    @Published var selectedDistrict: String = ""
+    @Published var selectedTimeSlot: String = ""
+    @Published var selectedFielType: String = ""
+    @Published var selectedMaxPrice: String = ""
+
+    // OUTPUT
+    @Published var fields: [FieldModel] = []
+    @Published var currentLocation: CLLocationCoordinate2D = CLLocationCoordinate2D(
+        latitude: 10.762622,
+        longitude: 106.660172)
 
     init() {
-        // Tự động tìm kiếm mỗi khi có thay đổi filter
+        setupBindings()
+    }
+
+// MARK: PRIVATE METHOD
+    private func setupBindings() {
         Publishers.CombineLatest4(
             $searchText,
             $selectedDistrict,
             $selectedTimeSlot,
-            $selectedType
+            $selectedMaxPrice
         )
         .debounce(for: 0.3, scheduler: DispatchQueue.main)
         .sink { [weak self] _, _, _, _ in
-            self?.fetchFields()
+            guard let self else { return }
+            self.fetchFields()
         }
         .store(in: &cancellables)
     }
 
+    private func convertDataToField(_ data: [FieldEntity]) -> [FieldModel] {
+        let dateFormatter: DateFormatter = {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "HH:mm" // Giả định định dạng giờ phút
+            formatter.locale = Locale(identifier: "en_US_POSIX")
+            return formatter
+        }()
+
+        return data.compactMap { entity in
+            guard
+                let lat = Double(entity.latitude),
+                let lon = Double(entity.longitude)
+            else {
+                return nil
+            }
+
+            let location = CLLocationCoordinate2D(latitude: lat, longitude: lon)
+
+            let timeSlots: [TimeSlotModel] = entity.availableTimeSlots.compactMap { slot in
+                guard
+                    let start = dateFormatter.date(from: slot.startTime),
+                    let end = dateFormatter.date(from: slot.endTime),
+                    let priceInt = Int(slot.price)
+                else {
+                    return nil
+                }
+                return TimeSlotModel(startTime: start, endTime: end, price: priceInt)
+            }
+
+            return FieldModel(
+                name: entity.name,
+                address: entity.address,
+                location: location,
+                imagesUrl: entity.imageURL.map { [$0] },
+                availableTimeSlots: timeSlots
+            )
+        }
+    }
+
+    private func loadMockFields() -> [FieldEntity] {
+        guard let url = Bundle.main.url(forResource: "fields_mock", withExtension: "json"),
+              let data = try? Data(contentsOf: url),
+              let fields = try? JSONDecoder().decode([FieldEntity].self, from: data) else {
+            return []
+        }
+        return fields
+    }
+
+    // MARK: PUBLIC METHOD
     func fetchFields() {
+        print("fetchFields called")
         #if STUB
         let data = loadMockFields()
         fields = convertDataToField(data)
@@ -85,56 +151,5 @@ class SearchViewModel: ObservableObject {
         //        }
         #endif
     }
-
-// MARK: PRIVATE METHOD
-    private func convertDataToField(_ data: [FieldEntity]) -> [FieldModel] {
-        let dateFormatter: DateFormatter = {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "HH:mm" // Giả định định dạng giờ phút
-            formatter.locale = Locale(identifier: "en_US_POSIX")
-            return formatter
-        }()
-
-        return data.compactMap { entity in
-            guard
-                let lat = Double(entity.latitude),
-                let lon = Double(entity.longitude)
-            else {
-                return nil // Bỏ qua nếu không thể chuyển tọa độ
-            }
-
-            let location = CLLocationCoordinate2D(latitude: lat, longitude: lon)
-
-            let timeSlots: [TimeSlotModel] = entity.availableTimeSlots.compactMap { slot in
-                guard
-                    let start = dateFormatter.date(from: slot.startTime),
-                    let end = dateFormatter.date(from: slot.endTime),
-                    let priceInt = Int(slot.price)
-                else {
-                    return nil
-                }
-
-                return TimeSlotModel(startTime: start, endTime: end, price: priceInt)
-            }
-
-            return FieldModel(
-                name: entity.name,
-                address: entity.address,
-                location: location,
-                imagesUrl: entity.imageURL.map { [$0] }, // nếu là 1 ảnh, gói lại thành mảng
-                availableTimeSlots: timeSlots
-            )
-        }
-    }
-
-    private func loadMockFields() -> [FieldEntity] {
-        guard let url = Bundle.main.url(forResource: "fields_mock", withExtension: "json"),
-              let data = try? Data(contentsOf: url),
-              let fields = try? JSONDecoder().decode([FieldEntity].self, from: data) else {
-            return []
-        }
-        return fields
-    }
-
 
 }

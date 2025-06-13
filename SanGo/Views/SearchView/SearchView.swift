@@ -10,12 +10,13 @@ import MapKit
 
 struct SearchView: View {
     // MARK: PROPERTIES
+    @ObservedObject var locationManager: LocationManager
     @ObservedObject var viewModel: SearchViewModel
 
-    @State private var cameraPosition = MapCameraPosition.region(
+    @State private var cameraPosition: MapCameraPosition = MapCameraPosition.region(
         MKCoordinateRegion(
-            center: CLLocationCoordinate2D(latitude: 10.7626, longitude: 106.6602),
-            span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+            center: CLLocationCoordinate2D(latitude: 16.0471, longitude: 108.2068),
+            span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
         )
     )
 
@@ -23,52 +24,11 @@ struct SearchView: View {
     var body: some View {
         NavigationView {
             ZStack(alignment: .bottom) {
-                if viewModel.displayMode == .list {
-                    // List view
-                    VStack {
-                        // 🔍 Search Bar
-                        TextField("Nhập quận, thành phố...", text: $viewModel.searchText)
-                            .padding()
-                            .background(Color(.systemGray6))
-                            .cornerRadius(10)
-                            .padding(.horizontal)
-
-                        // 🧰 Bộ lọc
-                        ScrollView(.horizontal, showsIndicators: true) {
-                            HStack(spacing: 10) {
-                                FilterChip(filterType: .address, selection: $viewModel.selectedDistrict)
-                                FilterChip(filterType: .time, selection: $viewModel.selectedTimeSlot)
-                                FilterChip(filterType: .fieldType, selection: $viewModel.selectedFielType)
-                                FilterChip(filterType: .price, selection: $viewModel.selectedMaxPrice)
-                            }
-                            .padding(.horizontal)
-                        }
-                        .scrollClipDisabled()
-
-                        // 📋 Danh sách sân
-                        List(viewModel.fields) { field in
-                            FieldCard(field: field)
-                        }
-                        .listStyle(.plain)
-                    }
-                    .task {
-                        viewModel.fetchFields()
-                    }
-                } else {
-                    // Map view
-                    Map(position: $cameraPosition) {
-//                        ForEach(fields) { field in
-//                            Marker(field.name, coordinate: field.coordinate)
-//                        }
-                        UserAnnotation()
-                    }
-                    .mapControls {
-                        MapUserLocationButton()
-                        MapCompass()
-                    }
-                    .ignoresSafeArea(.all, edges: .all)
-                    .navigationBarHidden(true)
+                switch viewModel.displayMode {
+                case .list: listView
+                case .map: mapView
                 }
+
                 // Change display mode button
                 Button(action: {
                     viewModel.displayMode = (viewModel.displayMode == .list) ? .map : .list
@@ -83,10 +43,74 @@ struct SearchView: View {
         }
     }
 
+    private var searchField: some View {
+        // 🔍 Search Bar
+        TextField("Nhập quận, thành phố...", text: $viewModel.searchText)
+            .padding()
+            .background(Color(.systemGray6))
+            .cornerRadius(10)
+            .padding(.horizontal)
+    }
+
+    private var mapView: some View {
+        ZStack(alignment: .top) {
+            Map(position: $cameraPosition) {
+                UserAnnotation()
+            }
+            .mapControls {
+                MapUserLocationButton()
+                MapCompass()
+            }
+            .onAppear {
+                locationManager.requestLocation()
+            }
+
+            searchField
+                .padding()
+        }
+        .ignoresSafeArea(.all, edges: .bottom)
+        .navigationBarHidden(true)
+    }
+
+    private var listView: some View {
+        VStack {
+            searchField
+            // 🧰 Bộ lọc
+            ScrollView(.horizontal, showsIndicators: true) {
+                HStack(spacing: 10) {
+                    FilterChip(filterType: .address, selection: $viewModel.selectedDistrict)
+                    FilterChip(filterType: .time, selection: $viewModel.selectedTimeSlot)
+                    FilterChip(filterType: .fieldType, selection: $viewModel.selectedFielType)
+                    FilterChip(filterType: .price, selection: $viewModel.selectedMaxPrice)
+                }
+                .padding(.horizontal)
+            }
+            .scrollClipDisabled()
+            // 📋 Danh sách sân
+            List(viewModel.fields) { field in
+                FieldCard(field: field)
+            }
+            .listStyle(.plain).task {
+                viewModel.fetchFields()
+            }
+        }
+    }
+
     // MARK: Private Method
+    private func updateCameraPosition() {
+        guard let userLocation = locationManager.userLocation else {
+            return
+        }
+        cameraPosition = MapCameraPosition.region(
+            MKCoordinateRegion(
+                center: userLocation,
+                span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+            )
+        )
+    }
 
 }
 
 #Preview {
-    SearchView(viewModel: SearchViewModel())
+    SearchView(locationManager: LocationManager(), viewModel: SearchViewModel())
 }

@@ -19,11 +19,12 @@ enum SearchViewMode {
 
 class SearchViewModel: ObservableObject {
     // MARK: PROPERTIES
+
     private var cancellables = Set<AnyCancellable>()
     //private let db = Firestore.firestore()
 
     // INPUT FROM UI
-    @Published var displayMode: SearchViewMode = .list
+    @Published var displayMode: SearchViewMode = .map
     @Published var searchText: String = ""
     @Published var selectedDistrict: String = ""
     @Published var selectedTimeSlot: String = ""
@@ -32,9 +33,6 @@ class SearchViewModel: ObservableObject {
 
     // OUTPUT
     @Published var fields: [FieldModel] = []
-    @Published var currentLocation: CLLocationCoordinate2D = CLLocationCoordinate2D(
-        latitude: 10.762622,
-        longitude: 106.660172)
 
     init() {
         setupBindings()

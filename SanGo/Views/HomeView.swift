@@ -11,11 +11,12 @@ import SwiftData
 struct HomeView: View {
 //    @Environment(\.modelContext) private var modelContext
 //    @Query private var items: [FootballField]
+    @StateObject private var locationManager = LocationManager()
     @StateObject private var searchViewModel = SearchViewModel()
 
     var body: some View {
         TabView {
-            SearchView(viewModel: searchViewModel)
+            SearchView(locationManager: locationManager, viewModel: searchViewModel)
                 .tabItem {
                     Label("Tìm kiếm", systemImage: "magnifyingglass")
                 }

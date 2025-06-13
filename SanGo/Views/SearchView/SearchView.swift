@@ -45,11 +45,7 @@ struct SearchView: View {
 
     private var searchField: some View {
         // 🔍 Search Bar
-        TextField("Nhập quận, thành phố...", text: $viewModel.searchText)
-            .padding()
-            .background(Color(.systemGray6))
-            .cornerRadius(10)
-            .padding(.horizontal)
+        SearchBarView(provinceText: viewModel.selectedDistrict, onTapAction: {})
     }
 
     private var mapView: some View {

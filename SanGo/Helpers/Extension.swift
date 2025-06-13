@@ -13,8 +13,8 @@ func asyncAfter(_ delay: Double, execute closure: @escaping () -> Void) {
 extension View {
     func enableBorder(with radius: CGFloat = 12) -> some View {
         self
-            .padding(8)
-            .background(Color.white )
+            .padding(12)
+            .background(Color.white)
             .cornerRadius(radius)
             .shadow(color: .black.opacity(0.1), radius: 6)
             .overlay(RoundedRectangle(cornerRadius: radius)

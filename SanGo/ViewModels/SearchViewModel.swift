@@ -24,7 +24,7 @@ class SearchViewModel: ObservableObject {
     //private let db = Firestore.firestore()
 
     // INPUT FROM UI
-    @Published var displayMode: SearchViewMode = .map
+    @Published var displayMode: SearchViewMode = .list
     @Published var searchText: String = ""
     @Published var selectedDistrict: String = ""
     @Published var selectedTimeSlot: String = ""

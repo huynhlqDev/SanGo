@@ -20,20 +20,23 @@ struct SearchBarView: View {
     var body: some View {
         HStack {
             Image(systemName: "magnifyingglass")
-                .font(.title)
-                .padding(12)
+                .font(.title2)
+                .padding(.horizontal, 8)
             VStack {
-                Text(provinceText).bold()
+                Text(provinceText)
+                    .font(.subheadline).bold()
                     .frame(maxWidth: .infinity, alignment: .leading)
                 HStack(spacing: 0) {
                     Text("Thêm ")
                     Text(pannerText)
                         .offset(CGSize(width: 0, height: textOffset))
                 }
+                .font(.subheadline)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .foregroundStyle(.gray)
             }
         }
+        .foregroundStyle(.black)
         .enableBorder(with: 24)
         .frame(maxWidth: .infinity)
         .padding(.horizontal)
@@ -44,7 +47,7 @@ struct SearchBarView: View {
         .onChange(of: pannerText) { _,_ in
             withAnimation(.easeOut) {
                 textOffset = 10
-                asyncAfter(0.2, execute: {textOffset = 0})
+                asyncAfter(0.15, execute: {textOffset = 0})
             }
         }
         .onTapGesture(perform: onTapAction)

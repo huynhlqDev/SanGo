@@ -43,11 +43,6 @@ struct SearchView: View {
         }
     }
 
-    private var searchField: some View {
-        // 🔍 Search Bar
-        SearchBarView(provinceText: viewModel.selectedDistrict, onTapAction: {})
-    }
-
     private var mapView: some View {
         ZStack(alignment: .top) {
             Map(position: $cameraPosition) {
@@ -60,9 +55,8 @@ struct SearchView: View {
             .onAppear {
                 locationManager.requestLocation()
             }
-
-            searchField
-                .padding()
+            // 🔍 Search Bar
+            SearchBarView(provinceText: viewModel.selectedDistrict, onTapAction: {})
         }
         .ignoresSafeArea(.all, edges: .bottom)
         .navigationBarHidden(true)
@@ -70,7 +64,8 @@ struct SearchView: View {
 
     private var listView: some View {
         VStack {
-            searchField
+            // 🔍 Search Bar
+            SearchBarView(provinceText: viewModel.selectedDistrict, onTapAction: {})
             // 🧰 Bộ lọc
             ScrollView(.horizontal, showsIndicators: true) {
                 HStack(spacing: 10) {

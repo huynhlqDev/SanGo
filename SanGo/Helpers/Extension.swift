@@ -11,7 +11,7 @@ func asyncAfter(_ delay: Double, execute closure: @escaping () -> Void) {
 }
 
 extension View {
-    func enableBorder(with radius: CGFloat = 12) -> some View {
+    func enableBorder(with radius: CGFloat = 24) -> some View {
         self
             .padding(12)
             .background(Color.white)

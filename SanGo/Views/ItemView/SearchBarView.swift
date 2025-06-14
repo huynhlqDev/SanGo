@@ -37,7 +37,7 @@ struct SearchBarView: View {
             }
         }
         .foregroundStyle(.black)
-        .enableBorder(with: 24)
+        .enableBorder()
         .frame(maxWidth: .infinity)
         .padding(.horizontal)
         .onReceive(timer) { _ in

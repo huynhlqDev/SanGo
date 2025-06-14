@@ -103,6 +103,10 @@ class SearchViewModel: ObservableObject {
     }
 
     // MARK: PUBLIC METHOD
+    func switchDisplayMode() {
+        displayMode = displayMode == .list ? .map : .list
+    }
+
     func fetchFields() {
         print("fetchFields called")
         #if STUB

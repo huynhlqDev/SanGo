@@ -13,7 +13,7 @@ struct SearchBarView: View {
     private let pannerTextList: [String] = ["Thành phố", "Quận, huyện", "Phường, xã", "Đường phố"]
     private let timer = Timer.publish(every: 1.5, on: .main, in: .common).autoconnect()
 
-    @State private var pannerText: String = ""
+    @State private var pannerText: String = "Thành phố"
     @State private var pannerIndex: Int = 0
     @State private var textOffset: CGFloat = 0
 
@@ -51,7 +51,6 @@ struct SearchBarView: View {
             }
         }
         .onTapGesture(perform: onTapAction)
-
     }
 
 }

@@ -28,17 +28,12 @@ struct SearchView: View {
                 case .list: listView
                 case .map: mapView
                 }
-
-                // Change display mode button
-                Button(action: {
-                    viewModel.displayMode = (viewModel.displayMode == .list) ? .map : .list
-                }) {
-                    Text(viewModel.displayMode == .list ? "Bản đồ" : "Danh sách")
-                        .padding(.horizontal, 12)
-                        .padding(.vertical, 8)
-                        .background(Color.blue.opacity(0.1))
-                        .cornerRadius(12)
-                }
+                BaseButton(
+                    style: .dark,
+                    label: viewModel.displayMode == .list ? "Bản đồ" : "Danh sách",
+                    image: viewModel.displayMode == .list ? "map" : "checklist.unchecked",
+                    action: viewModel.switchDisplayMode
+                )
             }
         }
     }

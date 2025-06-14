@@ -21,16 +21,14 @@ struct FieldCard: View {
                     .foregroundColor(.gray)
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
-                        Text("16h-17h")
+                        ForEach(field.availableTimeSlots, id: \.id) { slot in
+                            TimeTag(label: slot.time)
+                        }
                     }
                 }
                 .scrollClipDisabled(true)
             }
-//            Image(systemName: "map")
-//                .resizable()
-//                .frame(width: 20, height: 20)
         }
-        .padding(.vertical, 8)
     }
 }
 

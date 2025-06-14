@@ -17,7 +17,7 @@ struct FieldModel: Identifiable {
 }
 
 struct TimeSlotModel {
-    let startTime: Date
-    let endTime: Date
+    let id: UUID = UUID()
+    let time: String
     let price: Int
 }

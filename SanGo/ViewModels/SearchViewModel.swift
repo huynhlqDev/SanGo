@@ -94,7 +94,7 @@ class SearchViewModel: ObservableObject {
                 else {
                     return nil
                 }
-                return TimeSlotModel(startTime: start, endTime: end, price: priceInt)
+                return TimeSlotModel(time: "\(slot.startTime)-\(slot.endTime)", price: priceInt)
             }
 
             return FieldModel(

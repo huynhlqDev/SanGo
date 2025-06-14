@@ -64,11 +64,7 @@ struct FilterChip: View {
                 Button(option) { selection = option }
             }
         } label: {
-            Text(selection.isEmpty ? filterType.options.first! : selection)
-                .padding(.horizontal, 12)
-                .padding(.vertical, 8)
-                .background(Color.blue.opacity(0.1))
-                .cornerRadius(20)
+            BaseButton(style: .filter(image: nil), label: selection.isEmpty ? filterType.options.first! : selection)
         }
     }
 }

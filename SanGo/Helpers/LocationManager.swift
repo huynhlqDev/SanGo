@@ -15,9 +15,13 @@ class LocationManager: NSObject, ObservableObject {
     @Published var authorizationStatus: CLAuthorizationStatus = .notDetermined
     @Published var locationError: String?
 
-    func requestLocation() {
+    override init() {
+        super.init()
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest// Dùng GPS
+    }
+
+    func requestLocation() {
         locationManager.requestWhenInUseAuthorization()// Yêu cầu quyền vị trí
         locationManager.requestLocation()// Yêu cầu vị trí hiện tại
     }

@@ -25,59 +25,37 @@ struct SearchView: View {
         NavigationView {
             ZStack(alignment: .bottom) {
                 switch viewModel.displayMode {
-                case .list: listView
-                case .map: mapView
+                case .list:
+                    VStack {
+                        SearchControlView(viewModel: viewModel)
+                        List(viewModel.fields) { field in
+                            FieldCard(field: field)
+                        }
+                        .listStyle(.plain)
+                        .task {
+                            viewModel.fetchFields()
+                        }
+                    }
+                case .map:
+                    ZStack(alignment: .top) {
+                        Map(position: $cameraPosition) {
+                            UserAnnotation()
+                        }
+                        .mapControls {
+                            MapUserLocationButton()
+                            MapCompass()
+                        }
+                        .onAppear(perform: locationManager.requestLocation)
+                        SearchControlView(viewModel: viewModel, backgroundColor: .clear)
+                    }
+                    .navigationBarHidden(true)
                 }
                 BaseButton(
-                    style: .dark,
-                    label: viewModel.displayMode == .list ? "Bản đồ" : "Danh sách",
-                    image: viewModel.displayMode == .list ? "map" : "checklist.unchecked",
+                    style: .dark(image: viewModel.displayMode.image),
+                    label: viewModel.displayMode.switchTextButton,
                     action: viewModel.switchDisplayMode
                 )
-            }
-        }
-    }
-
-    private var mapView: some View {
-        ZStack(alignment: .top) {
-            Map(position: $cameraPosition) {
-                UserAnnotation()
-            }
-            .mapControls {
-                MapUserLocationButton()
-                MapCompass()
-            }
-            .onAppear {
-                locationManager.requestLocation()
-            }
-            // 🔍 Search Bar
-            SearchBarView(provinceText: viewModel.selectedDistrict, onTapAction: {})
-        }
-        .ignoresSafeArea(.all, edges: .bottom)
-        .navigationBarHidden(true)
-    }
-
-    private var listView: some View {
-        VStack {
-            // 🔍 Search Bar
-            SearchBarView(provinceText: viewModel.selectedDistrict, onTapAction: {})
-            // 🧰 Bộ lọc
-            ScrollView(.horizontal, showsIndicators: true) {
-                HStack(spacing: 10) {
-                    FilterChip(filterType: .address, selection: $viewModel.selectedDistrict)
-                    FilterChip(filterType: .time, selection: $viewModel.selectedTimeSlot)
-                    FilterChip(filterType: .fieldType, selection: $viewModel.selectedFielType)
-                    FilterChip(filterType: .price, selection: $viewModel.selectedMaxPrice)
-                }
-                .padding(.horizontal)
-            }
-            .scrollClipDisabled()
-            // 📋 Danh sách sân
-            List(viewModel.fields) { field in
-                FieldCard(field: field)
-            }
-            .listStyle(.plain).task {
-                viewModel.fetchFields()
+                .padding(8)
             }
         }
     }
@@ -97,6 +75,6 @@ struct SearchView: View {
 
 }
 
-#Preview {
-    SearchView(locationManager: LocationManager(), viewModel: SearchViewModel())
-}
+//#Preview {
+//    SearchView(locationManager: LocationManager(), viewModel: SearchViewModel())
+//}

@@ -15,6 +15,20 @@ import CoreLocation
 enum SearchViewMode {
     case list
     case map
+
+    var image: String {
+        switch self {
+            case .list: return "map"
+            case .map: return "checklist.unchecked"
+        }
+    }
+
+    var switchTextButton: String {
+        switch self {
+        case .list: "Bản đồ"
+        case .map: "Danh sách"
+        }
+    }
 }
 
 class SearchViewModel: ObservableObject {
@@ -26,10 +40,10 @@ class SearchViewModel: ObservableObject {
     // INPUT FROM UI
     @Published var displayMode: SearchViewMode = .list
     @Published var searchText: String = ""
-    @Published var selectedDistrict: String = ""
-    @Published var selectedTimeSlot: String = ""
-    @Published var selectedFielType: String = ""
-    @Published var selectedMaxPrice: String = ""
+    @Published var selectedDistrict: String = "Thành phố"
+    @Published var selectedTimeSlot: String = "Thời gian"
+    @Published var selectedFielType: String = "Loại sân"
+    @Published var selectedMaxPrice: String = "Giá"
 
     // OUTPUT
     @Published var fields: [FieldModel] = []

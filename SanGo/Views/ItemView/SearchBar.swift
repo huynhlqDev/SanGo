@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SearchBarView: View {
+struct SearchBar: View {
     var provinceText: String
     var onTapAction: () -> Void
     private let pannerTextList: [String] = ["Thành phố", "Quận, huyện", "Phường, xã", "Đường phố"]
@@ -39,7 +39,6 @@ struct SearchBarView: View {
         .foregroundStyle(.black)
         .enableBorder()
         .frame(maxWidth: .infinity)
-        .padding(.horizontal)
         .onReceive(timer) { _ in
             pannerIndex = (pannerIndex + 1) % pannerTextList.count
             pannerText = pannerTextList[pannerIndex]
@@ -55,6 +54,6 @@ struct SearchBarView: View {
 
 }
 
-#Preview {
-    SearchBarView(provinceText: "Hà Nội", onTapAction: { print("Tapped")})
-}
+//#Preview {
+//    SearchBar(provinceText: "Hà Nội", onTapAction: { print("Tapped")})
+//}

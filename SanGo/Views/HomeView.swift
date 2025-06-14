@@ -17,18 +17,14 @@ struct HomeView: View {
     var body: some View {
         TabView {
             SearchView(locationManager: locationManager, viewModel: searchViewModel)
-                .tabItem {
-                    Label("Tìm kiếm", systemImage: "magnifyingglass")
-                }
+                .tabItem {TabItem.search}
             MyFieldsView()
-                .tabItem {
-                    Label("Sân của tôi", systemImage: "soccerball")
-                }
+                .tabItem {TabItem.myField}
             AccountView()
-                .tabItem {
-                    Label("Tài khoản", systemImage: "person.crop.circle")
-                }
+                .tabItem {TabItem.myAccount}
         }
+        .tint(Color.color4)
+        .preferredColorScheme(.light)
     }
 }
 

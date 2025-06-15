@@ -10,25 +10,38 @@ import CoreLocation
 
 struct FieldCard: View {
     var field: FieldModel
+    var action: () -> Void
 
     var body: some View {
-        HStack {
+        VStack() {
+            ImageView()
+                .frame(height: 100)
+                .frame(maxWidth: .infinity)
+
             VStack(alignment: .leading, spacing: 6) {
                 Text(field.name)
                     .font(.headline)
-                Text(field.address)
-                    .font(.subheadline)
-                    .foregroundColor(.gray)
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack {
-                        ForEach(field.availableTimeSlots, id: \.id) { slot in
-                            TimeTag(label: slot.time)
-                        }
+                    .lineLimit(1)
+                    .truncationMode(.tail)
+                HStack {
+                    VStack(alignment: .leading) {
+                        Text(field.address)
+                            .font(.subheadline)
+                            .lineLimit(1)
+                            .truncationMode(.tail)
+                            .foregroundColor(.gray)
+                        Text("5h30 - 22h30")
+                            .font(.subheadline)
+                            .foregroundColor(.gray)
                     }
+                    Spacer()
+                    BaseButton(style: .state(enable: true, label: "Đặt lịch"))
                 }
-                .scrollClipDisabled(true)
             }
+            .padding(.horizontal, 8)
+            .padding(.bottom, 8)
         }
+        .onTapGesture(perform: action)
     }
 }
 
@@ -39,5 +52,5 @@ struct FieldCard: View {
         location: CLLocationCoordinate2D(latitude: Double(10.7702), longitude: Double(106.6597)),
         imagesUrl: [],
         availableTimeSlots: []
-    ))
+    ), action: {})
 }

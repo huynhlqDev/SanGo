@@ -11,12 +11,11 @@ import SwiftData
 struct HomeView: View {
 //    @Environment(\.modelContext) private var modelContext
 //    @Query private var items: [FootballField]
-    @StateObject private var locationManager = LocationManager()
     @StateObject private var searchViewModel = SearchViewModel()
 
     var body: some View {
         TabView {
-            SearchView(locationManager: locationManager, viewModel: searchViewModel)
+            SearchView(viewModel: searchViewModel)
                 .tabItem {TabItem.search}
             MyFieldsView()
                 .tabItem {TabItem.myField}

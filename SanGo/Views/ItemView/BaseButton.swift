@@ -13,6 +13,16 @@ enum ButtonStyle: Equatable {
     case light(image: String?)
     case filter(image: String?)
     case highlight(image: String?)
+    case state(enable: Bool, label: String)
+
+    var radius: CGFloat {
+        switch self {
+        case .state(_, _):
+            return 8
+        default:
+            return 24
+        }
+    }
 
     var imageString: String? {
         switch self {
@@ -20,6 +30,7 @@ enum ButtonStyle: Equatable {
         case .light(let image): return image
         case .highlight(let image): return image
         case .filter(let image): return image
+        case .state(_,_): return nil
         }
     }
 
@@ -29,12 +40,18 @@ enum ButtonStyle: Equatable {
         case .light: return .white
         case .highlight: return .red
         case .filter: return .white
+        case .state(let isEnabled, _):
+            if isEnabled {
+                return .orange.opacity(0.8)
+            } else {
+                return .gray
+            }
         }
     }
 
     var foregroundStyle: Color {
         switch self {
-        case .dark, .highlight:  return .white
+        case .dark, .highlight, .state:  return .white
         default: return .black
         }
     }
@@ -45,6 +62,7 @@ enum ButtonStyle: Equatable {
         case .light: return 1
         case .filter: return 2
         case .highlight: return 3
+        case .state: return 4
         }
     }
 
@@ -58,13 +76,16 @@ struct BaseButton: View {
     // MARK: PROPERTIES
     var style: ButtonStyle
     var label: String?
-    var action: () -> Void = {print("Execute action")}
+    var action: () -> Void = {print("Execute BaseButton action")}
 
     // MARK: VIEW
     var body: some View {
 
         HStack {
             switch style {
+            case .state(_, let label):
+                Text(label)
+                    .font(.subheadline).bold()
             case .filter(_):
                 if let label {
                     Text(label)
@@ -82,8 +103,7 @@ struct BaseButton: View {
                         .frame(width: 20, height: 18)
                 }
                 if let label {
-                    Text(label)
-                        .bold()
+                    Text(label).bold()
                 }
             }
         }
@@ -91,9 +111,9 @@ struct BaseButton: View {
         .padding(.vertical, 8)
         .foregroundStyle(style.foregroundStyle)
         .background(style.backgroundColor)
-        .cornerRadius(24)
+        .cornerRadius(style.radius)
         .shadow(color: .black.opacity(0.1), radius: 6)
-        .overlay(RoundedRectangle(cornerRadius: 22)
+        .overlay(RoundedRectangle(cornerRadius: style.radius)
             .stroke(Color.gray.opacity(0.3), lineWidth: 1)
         )
         .onTapGesture(perform: action)
@@ -105,4 +125,6 @@ struct BaseButton: View {
     BaseButton(style: .highlight(image: "phone"), label: "bản đồ")
     BaseButton(style: .dark(image: "map"), label: "bản đồ")
     BaseButton(style: .light(image: "checklist.unchecked"), label: "Danh sách")
+    BaseButton(style: .state(enable: true, label: "ĐẶT LỊCH"))
+    BaseButton(style: .state(enable: false, label: "ĐẶT LỊCH"))
 }

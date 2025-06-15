@@ -56,14 +56,14 @@ extension Color {
 
 // MARK: VIEW
 extension View {
-    func enableBorder(with radius: CGFloat = 24) -> some View {
+    func enableBorder(with radius: CGFloat = 24, opacity: Double = 0.3) -> some View {
         self
             .padding(12)
             .background(Color.white)
             .cornerRadius(radius)
             .shadow(color: .black.opacity(0.1), radius: 6)
             .overlay(RoundedRectangle(cornerRadius: radius)
-                .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+                .stroke(Color.gray.opacity(opacity), lineWidth: 1)
             )
     }
 }

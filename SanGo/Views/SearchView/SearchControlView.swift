@@ -31,6 +31,6 @@ struct SearchControlView: View {
     }
 }
 
-//#Preview {
-//    SearchControlView(viewModel: SearchViewModel())
-//}
+#Preview {
+    SearchControlView(viewModel: SearchViewModel())
+}

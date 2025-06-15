@@ -19,23 +19,27 @@ struct FieldCard: View {
                 .frame(maxWidth: .infinity)
 
             VStack(alignment: .leading, spacing: 6) {
-                Text(field.name)
-                    .font(.headline)
-                    .lineLimit(1)
-                    .truncationMode(.tail)
                 HStack {
                     VStack(alignment: .leading) {
+                        Text(field.name)
+                            .font(.headline)
+                            .lineLimit(1)
+                            .truncationMode(.tail)
                         Text(field.address)
                             .font(.subheadline)
                             .lineLimit(1)
                             .truncationMode(.tail)
                             .foregroundColor(.gray)
-                        Text("5h30 - 22h30")
-                            .font(.subheadline)
-                            .foregroundColor(.gray)
                     }
                     Spacer()
                     BaseButton(style: .state(enable: true, label: "Đặt lịch"))
+                }
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack {
+                        ForEach(field.availableTimeSlots, id: \.id) { slotTime in
+                            TimeTag(label: slotTime.time)
+                        }
+                    }
                 }
             }
             .padding(.horizontal, 8)

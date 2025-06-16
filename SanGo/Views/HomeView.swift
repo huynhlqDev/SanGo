@@ -13,14 +13,18 @@ struct HomeView: View {
 //    @Query private var items: [FootballField]
     @StateObject private var searchViewModel = SearchViewModel()
 
+    @State private var selectedTab: Int = 1
+
     var body: some View {
-        TabView {
+        TabView(selection: $selectedTab) {
             SearchView(viewModel: searchViewModel)
-                .tabItem {TabItem.search}
+                .tabItem {TabItem.search}.tag(0)
+
             MyFieldsView()
-                .tabItem {TabItem.myField}
+                .tabItem {TabItem.myField}.tag(1)
+
             AccountView()
-                .tabItem {TabItem.myAccount}
+                .tabItem {TabItem.myAccount}.tag(2)
         }
         .tint(Color.color4)
         .preferredColorScheme(.light)

@@ -13,7 +13,7 @@ struct HomeView: View {
 //    @Query private var items: [FootballField]
     @StateObject private var searchViewModel = SearchViewModel()
 
-    @State private var selectedTab: Int = 1
+    @State private var selectedTab: Int = 0
 
     var body: some View {
         TabView(selection: $selectedTab) {
@@ -27,7 +27,6 @@ struct HomeView: View {
                 .tabItem {TabItem.myAccount}.tag(2)
         }
         .tint(Color.color4)
-        .preferredColorScheme(.light)
     }
 }
 

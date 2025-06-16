@@ -13,7 +13,7 @@ struct SearchView: View {
 
     // MARK: View
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ZStack(alignment: .bottom) {
                 switch viewModel.displayMode {
                 case .list:
@@ -28,6 +28,8 @@ struct SearchView: View {
                 )
                 .padding(8)
             }
+            .toolbarBackground(Color.color1, for: .tabBar)
+            .toolbarBackground(.visible, for: .tabBar)
         }
     }
 }

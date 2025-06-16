@@ -5,6 +5,7 @@
 //  Created by huynh on 13/6/25.
 //
 import SwiftUI
+
 // MARK: METHOD
 func asyncAfter(_ delay: Double, execute closure: @escaping () -> Void) {
     DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: closure)
@@ -65,5 +66,20 @@ extension View {
             .overlay(RoundedRectangle(cornerRadius: radius)
                 .stroke(Color.gray.opacity(opacity), lineWidth: 1)
             )
+    }
+}
+
+// MARK: NAVIGATION CUSTOM
+extension View {
+    func navigationTitle(title: String,mode displayMode: NavigationBarItem.TitleDisplayMode) -> some View {
+        self
+            .navigationTitle(title)
+            .navigationBarTitleDisplayMode(displayMode)
+    }
+
+    func toolbarBackground(with color: Color, for edge: ToolbarPlacement) -> some View {
+        self
+            .toolbarBackground(color, for: edge)
+            .toolbarBackground(.visible, for: edge)
     }
 }

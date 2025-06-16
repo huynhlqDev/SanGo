@@ -8,17 +8,32 @@
 import SwiftUI
 
 struct MyFieldsView: View {
-    var body: some View {
-        NavigationView {
-            VStack {
 
+    @State private var displayMode: Bool = true
+    var body: some View {
+
+        NavigationStack() {
+            VStack {
+                SwitchButton(
+                    titleLeading: "Đã đặt",
+                    titleTrailing: "Yêu thich",
+                    isLeadingOn: $displayMode
+                )
+                VStack {
+                    if displayMode {
+                        Text("Danh sách sân đã đặt")
+                    } else {
+                        Text("Danh sách sân yêu thích")
+                    }
+                }.frame(maxWidth: .infinity, maxHeight: .infinity)
             }
-            .navigationTitle("Quản lý sân")
-            .navigationBarTitleDisplayMode(.large)
+            .navigationTitle(title: "Quản lý sân", mode: .inline)
+            .toolbarBackground(with: Color.color1, for: .navigationBar)
+            .toolbarBackground(with: Color.color1, for: .tabBar)
         }
     }
 }
 
-#Preview {
-    MyFieldsView()
-}
+//#Preview {
+//    MyFieldsView()
+//}

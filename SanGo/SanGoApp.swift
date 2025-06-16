@@ -27,6 +27,7 @@ struct SanGoApp: App {
     var body: some Scene {
         WindowGroup {
             HomeView()
+                .preferredColorScheme(.light)
                 .onChange(of: scenePhase) {
                     switch scenePhase {
                     case .background:

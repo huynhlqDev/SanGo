@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct NormalButton: View {
-    var size: ButtonSize = .large
+    var size: ButtonSizeEnum = .large
     var title: String
+    var disabled: Bool = false
     var action: () -> Void
 
     var body: some View {
@@ -24,9 +25,10 @@ struct NormalButton: View {
             .shadow(color: .black.opacity(0.1), radius: 6)
             .overlay(
                 RoundedRectangle(cornerRadius: 22)
-                    .stroke(Color.black.opacity(0.3), lineWidth: 1)
+                    .stroke(Color.black.opacity(0.2), lineWidth: 1)
             )
             .onTapGesture(perform: action)
+            .disabled(disabled)
     }
 }
 

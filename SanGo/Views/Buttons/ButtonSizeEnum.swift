@@ -6,7 +6,32 @@
 //
 import SwiftUI
 
-enum ButtonSize {
+enum ButtonStyleEnum {
+    case normal
+    case light
+    case attention
+    case danger
+
+    var backgroundColor: Color {
+        switch self {
+        case .normal: .clear
+        case .light: .clear
+        case .attention: .orange
+        case .danger: .red
+        }
+    }
+
+    var foregroundColor: Color {
+        switch self {
+        case .normal: .black
+        case .light: .black
+        case .attention: .white
+        case .danger: .white
+        }
+    }
+}
+
+enum ButtonSizeEnum {
     case mini
     case normal
     case large
@@ -43,6 +68,8 @@ enum ButtonSize {
     NormalButton(size: .normal, title: "Normal", action: {})
         .padding(.horizontal)
     LightButton(size: .normal, title: "Light", action: {})
+        .padding(.horizontal)
+    AttentionButton(size: .normal, title: "Normal", action: {})
         .padding(.horizontal)
     DangerButton(size: .normal, title: "Danger", action: {})
         .padding(.horizontal)

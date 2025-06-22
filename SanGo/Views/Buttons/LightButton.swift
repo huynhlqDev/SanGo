@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct LightButton: View {
-    var size: ButtonSize = .large
+    var size: ButtonSizeEnum = .large
     var title: String
+    var disabled: Bool = false
     var action: () -> Void
 
     var body: some View {
@@ -27,6 +28,7 @@ struct LightButton: View {
                     .stroke(Color.black.opacity(0.3), lineWidth: 1)
             )
             .onTapGesture(perform: action)
+            .disabled(disabled)
     }
 }
 

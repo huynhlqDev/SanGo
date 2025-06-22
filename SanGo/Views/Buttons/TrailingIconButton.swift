@@ -1,0 +1,67 @@
+//
+//  TrailingIconButton.swift
+//  SanGo
+//
+//  Created by huynh on 22/6/25.
+//
+
+import SwiftUI
+
+struct TrailingIconButton: View {
+    var style: ButtonStyleEnum = .normal
+    var size: ButtonSizeEnum = .large
+    var title: String
+    var image: String? = nil
+    var disabled: Bool = false
+    var action: () -> Void
+
+    var body: some View {
+        HStack {
+            Text(title)
+                .font(Font.system(size: size.fontSize)).bold()
+            if let image {
+                Image(systemName: image)
+                    .resizable()
+                    .frame(width: size.fontSize + 2, height: size.fontSize)
+            }
+        }
+        .foregroundStyle(style.foregroundColor)
+        .frame(maxWidth: .infinity)
+        .frame(height: size.height)
+        .padding(10)
+        .background(disabled ? .gray : style.backgroundColor)
+        .cornerRadius(22)
+        .shadow(color: .black.opacity(0.1), radius: 6)
+        .overlay(
+            RoundedRectangle(cornerRadius: 22)
+                .stroke(Color.black.opacity(0.3), lineWidth: 1)
+        )
+        .onTapGesture(perform: action)
+        .disabled(disabled)
+    }
+}
+
+#Preview {
+    VStack {
+        HStack {
+            TrailingIconButton(style: .normal, size: .mini, title: "Mini", image: "map", action: {})
+            TrailingIconButton(style: .normal, size: .normal, title: "Normal", action: {})
+            TrailingIconButton(style: .normal, size: .large, title: "Large", action: {})
+        }.padding(.horizontal)
+        HStack {
+            TrailingIconButton(style: .light, size: .mini, title: "Mini", image: "map", action: {})
+            TrailingIconButton(style: .light, size: .normal, title: "Normal", action: {})
+            TrailingIconButton(style: .light, size: .large, title: "Large", action: {})
+        }.padding(.horizontal)
+        HStack {
+            TrailingIconButton(style: .attention, size: .mini, title: "Mini", image: "map", action: {})
+            TrailingIconButton(style: .attention, size: .normal, title: "Normal", action: {})
+            TrailingIconButton(style: .attention, size: .large, title: "Large", action: {})
+        }.padding(.horizontal)
+        HStack {
+            TrailingIconButton(style: .danger, size: .mini, title: "Mini", image: "map", action: {})
+            TrailingIconButton(style: .danger, size: .normal, title: "Normal", action: {})
+            TrailingIconButton(style: .danger, size: .large, title: "Large", action: {})
+        }.padding(.horizontal)
+    }
+}

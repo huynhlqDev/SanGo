@@ -9,31 +9,32 @@ import SwiftUI
 
 struct MyFieldsView: View {
 
-    @State private var displayMode: Bool = true
+    @State private var displayMode: Int = 0
     var body: some View {
 
         NavigationStack() {
             VStack {
-                SwitchButton(
-                    titleLeading: "Đã đặt",
-                    titleTrailing: "Yêu thich",
-                    isLeadingOn: $displayMode
-                )
+                Picker("Options", selection: $displayMode) {
+                    Text("Đã đặt").tag(0)
+                    Text("Yêu thích").tag(1)
+                }
+                .pickerStyle(.segmented)
+                .padding()
+
                 VStack {
-                    if displayMode {
+                    if displayMode == 0 {
                         Text("Danh sách sân đã đặt")
                     } else {
                         Text("Danh sách sân yêu thích")
                     }
                 }.frame(maxWidth: .infinity, maxHeight: .infinity)
             }
-            .navigationTitle(title: "Quản lý sân", mode: .inline)
-            .toolbarBackground(with: Color.color1, for: .navigationBar)
+            .navigationTitle(title: "Quản lý sân", mode: .automatic)
             .toolbarBackground(with: Color.color1, for: .tabBar)
         }
     }
 }
 
-//#Preview {
-//    MyFieldsView()
-//}
+#Preview {
+    MyFieldsView()
+}

@@ -57,6 +57,19 @@ extension Color {
 
 // MARK: VIEW
 extension View {
+    func buttonStyle44(_ background: Color) -> some View {
+        self
+            .frame(maxWidth: .infinity)
+            .frame(height: 44)
+            .foregroundStyle(background == .white ? .black: .white)
+            .background(background)
+            .cornerRadius(22)
+            .shadow(color: .black.opacity(0.05), radius: 3)
+            .overlay(RoundedRectangle(cornerRadius: 22)
+                .stroke(Color.black.opacity(0.1), lineWidth: 1)
+            )
+    }
+
     func enableBorder(with radius: CGFloat = 24, opacity: Double = 0.3) -> some View {
         self
             .padding(12)

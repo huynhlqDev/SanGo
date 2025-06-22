@@ -14,6 +14,7 @@ enum ButtonStyle: Equatable {
     case filter(image: String?)
     case highlight(image: String?)
     case state(enable: Bool, label: String)
+    case normal(_ enable: Bool = true)
 
     var radius: CGFloat {
         switch self {
@@ -31,6 +32,7 @@ enum ButtonStyle: Equatable {
         case .highlight(let image): return image
         case .filter(let image): return image
         case .state(_,_): return nil
+        case .normal: return nil
         }
     }
 
@@ -46,6 +48,7 @@ enum ButtonStyle: Equatable {
             } else {
                 return .gray
             }
+        case .normal: return .clear
         }
     }
 
@@ -63,6 +66,7 @@ enum ButtonStyle: Equatable {
         case .filter: return 2
         case .highlight: return 3
         case .state: return 4
+        case .normal: return 5
         }
     }
 
@@ -81,50 +85,67 @@ struct BaseButton: View {
     // MARK: VIEW
     var body: some View {
 
-        HStack {
-            switch style {
-            case .state(_, let label):
-                Text(label)
-                    .font(.subheadline).bold()
-            case .filter(_):
-                if let label {
+        if style == .normal() {
+            Text(label ?? "")
+                .font(.title3).bold()
+                .foregroundStyle(style.foregroundStyle)
+                .background(style.backgroundColor)
+                .frame(maxWidth: .infinity)
+                .padding(10)
+                .cornerRadius(style.radius)
+                .shadow(color: .black.opacity(0.1), radius: 6)
+                .overlay(RoundedRectangle(cornerRadius: style.radius)
+                    .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+                )
+                .onTapGesture(perform: action)
+
+        } else {
+            HStack {
+                switch style {
+                case .state(_, let label):
                     Text(label)
-                        .foregroundStyle(.gray)
-                }
-                if style == .filter(image: nil) {
-                    Image(systemName: "chevron.down")
-                        .resizable()
-                        .frame(width: 8, height: 6)
-                }
-            default:
-                if let image = style.imageString {
-                    Image(systemName: image)
-                        .resizable()
-                        .frame(width: 20, height: 18)
-                }
-                if let label {
-                    Text(label).bold()
+                        .font(.subheadline).bold()
+                case .filter(_):
+                    if let label {
+                        Text(label)
+                            .foregroundStyle(.gray)
+                    }
+                    if style == .filter(image: nil) {
+                        Image(systemName: "chevron.down")
+                            .resizable()
+                            .frame(width: 8, height: 6)
+                    }
+                default:
+                    if let image = style.imageString {
+                        Image(systemName: image)
+                            .resizable()
+                            .frame(width: 20, height: 18)
+                    }
+                    if let label {
+                        Text(label).bold()
+                    }
                 }
             }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 8)
+            .foregroundStyle(style.foregroundStyle)
+            .background(style.backgroundColor)
+            .cornerRadius(style.radius)
+            .shadow(color: .black.opacity(0.1), radius: 6)
+            .overlay(RoundedRectangle(cornerRadius: style.radius)
+                .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+            )
+            .onTapGesture(perform: action)
         }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 8)
-        .foregroundStyle(style.foregroundStyle)
-        .background(style.backgroundColor)
-        .cornerRadius(style.radius)
-        .shadow(color: .black.opacity(0.1), radius: 6)
-        .overlay(RoundedRectangle(cornerRadius: style.radius)
-            .stroke(Color.gray.opacity(0.3), lineWidth: 1)
-        )
-        .onTapGesture(perform: action)
     }
 }
 
-#Preview {
-    BaseButton(style: .filter(image: nil), label: "Thành phố")
-    BaseButton(style: .highlight(image: "phone"), label: "bản đồ")
-    BaseButton(style: .dark(image: "map"), label: "bản đồ")
-    BaseButton(style: .light(image: "checklist.unchecked"), label: "Danh sách")
-    BaseButton(style: .state(enable: true, label: "ĐẶT LỊCH"))
-    BaseButton(style: .state(enable: false, label: "ĐẶT LỊCH"))
-}
+//#Preview {
+//    BaseButton(style: .filter(image: nil), label: "Thành phố")
+//    BaseButton(style: .highlight(image: "phone"), label: "bản đồ")
+//    BaseButton(style: .dark(image: "map"), label: "bản đồ")
+//    BaseButton(style: .light(image: "checklist.unchecked"), label: "Danh sách")
+//    BaseButton(style: .state(enable: true, label: "ĐẶT LỊCH"))
+//    BaseButton(style: .state(enable: false, label: "ĐẶT LỊCH"))
+//    BaseButton(style: .normal(), label: "Đặt lại", action: {})
+//}

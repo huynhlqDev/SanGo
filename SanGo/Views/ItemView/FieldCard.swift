@@ -32,7 +32,9 @@ struct FieldCard: View {
                             .foregroundColor(.gray)
                     }
                     Spacer()
-                    BaseButton(style: .state(enable: true, label: "Đặt lịch"))
+                    AttentionButton(size: .normal, title: "Đặt lịch", action: {
+                        // TODO: Handle button action
+                    })
                 }
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {

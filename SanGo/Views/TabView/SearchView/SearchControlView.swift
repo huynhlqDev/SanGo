@@ -10,8 +10,7 @@ import SwiftUI
 struct SearchControlView: View {
     // MARK: PROPERTIES
     @ObservedObject var viewModel: SearchViewModel
-    @State var isPresented: Bool = false
-    var backgroundColor: Color = .color1
+    @State var showFilterDetail: Bool = false
 
     // MARK: VIEW
     var body: some View {
@@ -19,22 +18,35 @@ struct SearchControlView: View {
             SearchBar(provinceText: viewModel.selectedDistrict, onTapAction: {})
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 10) {
-                    BaseButton(style: .filter(image: nil),
-                               label: viewModel.selectedTimeSlot,
-                               action: showFilterDetail)
-                    BaseButton(style: .filter(image: nil),
-                               label: viewModel.selectedFielType,
-                               action: showFilterDetail)
-                    BaseButton(style: .filter(image: nil), label: viewModel.selectedMaxPrice,
-                               action: showFilterDetail)
+                    TrailingIconButton(style: .light,
+                                       title: "Ngày",
+                                       image: "chevron.down",
+                                       imageSize: 8, action: pushFilterDetail)
+                    TrailingIconButton(style: .light,
+                                       title: "Khung giờ",
+                                       image: "chevron.down",
+                                       imageSize: 8, action: pushFilterDetail)
+                    TrailingIconButton(style: .light,
+                                       title: "Loại sân",
+                                       image: "chevron.down",
+                                       imageSize: 8, action: pushFilterDetail)
+                    TrailingIconButton(style: .light,
+                                       title: "Giá",
+                                       image: "chevron.down",
+                                       imageSize: 8, action: pushFilterDetail)
                 }
             }
             .scrollClipDisabled(true)
         }
         .padding()
-        .background(backgroundColor)
+        .background(viewModel.displayMode == .list ? Color.color1 : .clear)
+        .sheet(isPresented: $showFilterDetail) {
+                TimeSlotFilterView(dismiss: popFilterDetail, searchViewModel: viewModel)
+                    .presentationDetents([.fraction(0.9)])
+                    .interactiveDismissDisabled()
+        }
 
-        .sheet(isPresented: $isPresented) {
+        .sheet(isPresented: $showFilterDetail) {
             VStack {
                 HStack(alignment: .center) {
                     Text("Loại Sân")
@@ -46,7 +58,7 @@ struct SearchControlView: View {
                         .resizable()
                         .frame(width: 24, height: 24)
                         .onTapGesture {
-                            isPresented = false
+                            showFilterDetail = false
                         }
                 }
                 .padding(12)
@@ -58,7 +70,7 @@ struct SearchControlView: View {
                 }
                 HStack {
                     NormalButton(title: "Đặt lại", action: {})
-                    DangerButton(title: "Áp dụng", disabled: true, action: hideFilterDetail)
+                    DangerButton(title: "Áp dụng", disabled: true, action: popFilterDetail)
                 }
                 .padding(.horizontal)
             }
@@ -67,12 +79,12 @@ struct SearchControlView: View {
         }
     }
 
-    private func showFilterDetail() {
-        isPresented = true
-    }
 
-    private func hideFilterDetail() {
-        isPresented = false
+    func pushFilterDetail() {
+        showFilterDetail = true
+    }
+    func popFilterDetail() {
+        showFilterDetail = false
     }
 }
 

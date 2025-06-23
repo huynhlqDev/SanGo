@@ -8,16 +8,17 @@
 import SwiftUI
 
 struct AttentionButton: View {
-    var size: ButtonSizeEnum = .large
+    var size: ButtonSize = .large
     var title: String
     var disabled: Bool = false
+    var maxWidth: CGFloat? = nil
     var action: () -> Void
 
     var body: some View {
         Text(title)
             .font(Font.system(size: size.fontSize)).bold()
             .foregroundStyle(.white)
-            .frame(maxWidth: .infinity)
+            .frame(maxWidth: (maxWidth != nil) ? maxWidth : .none)
             .frame(height: size.height)
             .padding(10)
             .background(disabled ? .gray : .orange)

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SearchBar: View {
-    var provinceText: String
+    var provinceText: String?
     var onTapAction: () -> Void
     private let pannerTextList: [String] = ["Thành phố", "Quận, huyện", "Phường, xã", "Đường phố"]
     private let timer = Timer.publish(every: 1.5, on: .main, in: .common).autoconnect()
@@ -23,7 +23,7 @@ struct SearchBar: View {
                 .font(.title2)
                 .padding(.horizontal, 8)
             VStack {
-                Text(provinceText)
+                Text(provinceText ?? pannerTextList.first!)
                     .font(.subheadline).bold()
                     .frame(maxWidth: .infinity, alignment: .leading)
                 HStack(spacing: 0) {

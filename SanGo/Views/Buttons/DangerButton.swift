@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DangerButton: View {
-    var size: ButtonSizeEnum = .large
+    var size: ButtonSize = .large
     var title: String
     var disabled: Bool = false
     var action: () -> Void

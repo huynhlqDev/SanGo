@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LightButton: View {
-    var size: ButtonSizeEnum = .large
+    var size: ButtonSize = .large
     var title: String
     var disabled: Bool = false
     var action: () -> Void
@@ -20,7 +20,7 @@ struct LightButton: View {
             .frame(maxWidth: .infinity)
             .frame(height: size.height)
             .padding(10)
-            .background(.clear)
+            .background(.white)
             .cornerRadius(22)
             .shadow(color: .black.opacity(0.1), radius: 6)
             .overlay(

@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct TrailingIconButton: View {
-    var style: ButtonStyleEnum = .normal
-    var size: ButtonSizeEnum = .large
+    var style: ButtonStyle = .normal
+    var size: ButtonSize = .large
     var title: String
     var image: String? = nil
+    var imageSize: CGFloat? = nil
     var disabled: Bool = false
     var action: () -> Void
 
@@ -22,13 +23,14 @@ struct TrailingIconButton: View {
             if let image {
                 Image(systemName: image)
                     .resizable()
-                    .frame(width: size.fontSize + 2, height: size.fontSize)
+                    .frame(width: imageSize ?? size.height, height:  imageSize ?? size.height)
             }
         }
         .foregroundStyle(style.foregroundColor)
         .frame(maxWidth: .infinity)
         .frame(height: size.height)
-        .padding(10)
+        .padding(.vertical, 8)
+        .padding(.horizontal, 16)
         .background(disabled ? .gray : style.backgroundColor)
         .cornerRadius(22)
         .shadow(color: .black.opacity(0.1), radius: 6)

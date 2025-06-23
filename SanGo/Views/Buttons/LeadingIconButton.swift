@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct LeadingIconButton: View {
-    var style: ButtonStyleEnum = .normal
-    var size: ButtonSizeEnum = .large
+    var style: ButtonStyle = .normal
+    var size: ButtonSize = .large
     var title: String
     var image: String? = nil
     var disabled: Bool = false

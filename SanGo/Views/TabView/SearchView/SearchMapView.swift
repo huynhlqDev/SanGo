@@ -29,7 +29,7 @@ struct SearchMapView: View {
                 MapCompass()
             }
             .onAppear(perform: locationManager.requestLocation)
-            SearchControlView(viewModel: viewModel, backgroundColor: .clear)
+            SearchControlView(viewModel: viewModel)
         }
         .navigationBarHidden(true)
     }

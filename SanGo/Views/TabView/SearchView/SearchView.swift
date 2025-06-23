@@ -21,12 +21,12 @@ struct SearchView: View {
                 case .map:
                     SearchMapView(viewModel: viewModel)
                 }
-                BaseButton(
-                    style: .dark(image: viewModel.displayMode.image),
-                    label: viewModel.displayMode.switchTextButton,
-                    action: viewModel.switchDisplayMode
-                )
-                .padding(8)
+//                BaseButton(
+//                    style: .dark(image: viewModel.displayMode.image),
+//                    label: viewModel.displayMode.switchTextButton,
+//                    action: viewModel.switchDisplayMode
+//                )
+//                .padding(8)
             }
             .toolbarBackground(Color.color1, for: .tabBar)
             .toolbarBackground(.visible, for: .tabBar)

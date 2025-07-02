@@ -47,22 +47,22 @@ struct TrailingIconButton: View {
     VStack {
         HStack {
             TrailingIconButton(style: .normal, size: .mini, title: "Mini", image: "map", action: {})
-            TrailingIconButton(style: .normal, size: .normal, title: "Normal", action: {})
+            TrailingIconButton(style: .normal, size: .medium, title: "Normal", action: {})
             TrailingIconButton(style: .normal, size: .large, title: "Large", action: {})
         }.padding(.horizontal)
         HStack {
             TrailingIconButton(style: .light, size: .mini, title: "Mini", image: "map", action: {})
-            TrailingIconButton(style: .light, size: .normal, title: "Normal", action: {})
+            TrailingIconButton(style: .light, size: .medium, title: "Normal", action: {})
             TrailingIconButton(style: .light, size: .large, title: "Large", action: {})
         }.padding(.horizontal)
         HStack {
             TrailingIconButton(style: .attention, size: .mini, title: "Mini", image: "map", action: {})
-            TrailingIconButton(style: .attention, size: .normal, title: "Normal", action: {})
+            TrailingIconButton(style: .attention, size: .medium, title: "Normal", action: {})
             TrailingIconButton(style: .attention, size: .large, title: "Large", action: {})
         }.padding(.horizontal)
         HStack {
             TrailingIconButton(style: .danger, size: .mini, title: "Mini", image: "map", action: {})
-            TrailingIconButton(style: .danger, size: .normal, title: "Normal", action: {})
+            TrailingIconButton(style: .danger, size: .medium, title: "Normal", action: {})
             TrailingIconButton(style: .danger, size: .large, title: "Large", action: {})
         }.padding(.horizontal)
     }

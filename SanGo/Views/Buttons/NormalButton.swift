@@ -35,7 +35,7 @@ struct NormalButton: View {
 #Preview {
     HStack {
         NormalButton(size: .mini, title: "Mini", action: {})
-        NormalButton(size: .normal, title: "normal", action: {})
+        NormalButton(size: .medium, title: "normal", action: {})
         NormalButton(size: .large, title: "large", action: {})
     }
     .padding()

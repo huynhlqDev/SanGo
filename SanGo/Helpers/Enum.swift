@@ -55,14 +55,22 @@ enum ButtonStyle {
 // MARK: ButtonSize
 enum ButtonSize {
     case mini
-    case normal
+    case medium
     case large
 
     var height: CGFloat {
         switch self {
         case .mini: 10.0
-        case .normal: 16.0
+        case .medium: 14.0
         case .large: 22.0
+        }
+    }
+
+    var iconSize: CGFloat {
+        switch self {
+        case .mini: 8
+        case .medium: 16
+        case .large: 28
         }
     }
 
@@ -70,7 +78,7 @@ enum ButtonSize {
         switch self {
         case .mini:
             return 12.0
-        case .normal:
+        case .medium:
             return 14.0
         case .large:
             return 16.0
@@ -80,7 +88,7 @@ enum ButtonSize {
     var font: Font {
         switch self {
         case .mini: .footnote
-        case .normal: .body
+        case .medium: .body
         case .large: .title3
         }
     }

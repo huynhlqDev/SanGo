@@ -23,7 +23,6 @@ class SearchViewModel: ObservableObject {
     @Published var selectedDistrict: String? = nil
     @Published var selectedTimeSlot: [String] = []
     @Published var selectedFielType: Int? = nil
-    @Published var selectedMaxPrice: String = ""
 
     // OUTPUT
     @Published var fields: [FieldModel] = []
@@ -34,14 +33,13 @@ class SearchViewModel: ObservableObject {
 
 // MARK: PRIVATE METHOD
     private func setupBindings() {
-        Publishers.CombineLatest4(
+        Publishers.CombineLatest3(
             $searchText,
             $selectedDistrict,
-            $selectedTimeSlot,
-            $selectedMaxPrice
+            $selectedTimeSlot
         )
         .debounce(for: 0.3, scheduler: DispatchQueue.main)
-        .sink { [weak self] _, _, _, _ in
+        .sink { [weak self] _, _, _ in
             guard let self else { return }
             self.fetchFields()
         }

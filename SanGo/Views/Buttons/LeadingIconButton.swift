@@ -20,7 +20,7 @@ struct LeadingIconButton: View {
             if let image {
                 Image(systemName: image)
                     .resizable()
-                    .frame(width: size.fontSize + 2, height: size.fontSize)
+                    .frame(width: size.iconSize, height: size.iconSize)
             }
             Text(title)
                 .font(Font.system(size: size.fontSize)).bold()
@@ -44,23 +44,23 @@ struct LeadingIconButton: View {
 #Preview {
     VStack {
         HStack {
-            LeadingIconButton(style: .normal, size: .mini, title: "Mini", image: "map", action: {})
-            LeadingIconButton(style: .normal, size: .normal, title: "Normal", action: {})
+            LeadingIconButton(style: .normal, size: .medium, title: "Mini", image: "map", action: {})
+            LeadingIconButton(style: .normal, size: .medium, title: "Normal", action: {})
             LeadingIconButton(style: .normal, size: .large, title: "Large", action: {})
         }.padding(.horizontal)
         HStack {
             LeadingIconButton(style: .light, size: .mini, title: "Mini", image: "map", action: {})
-            LeadingIconButton(style: .light, size: .normal, title: "Normal", action: {})
+            LeadingIconButton(style: .light, size: .medium, title: "Normal", action: {})
             LeadingIconButton(style: .light, size: .large, title: "Large", action: {})
         }.padding(.horizontal)
         HStack {
             LeadingIconButton(style: .attention, size: .mini, title: "Mini", image: "map", action: {})
-            LeadingIconButton(style: .attention, size: .normal, title: "Normal", action: {})
+            LeadingIconButton(style: .attention, size: .medium, title: "Normal", action: {})
             LeadingIconButton(style: .attention, size: .large, title: "Large", action: {})
         }.padding(.horizontal)
         HStack {
             LeadingIconButton(style: .danger, size: .mini, title: "Mini", image: "map", action: {})
-            LeadingIconButton(style: .danger, size: .normal, title: "Normal", action: {})
+            LeadingIconButton(style: .danger, size: .medium, title: "Normal", action: {})
             LeadingIconButton(style: .danger, size: .large, title: "Large", action: {})
         }.padding(.horizontal)
     }

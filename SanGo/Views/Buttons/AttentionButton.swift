@@ -36,7 +36,7 @@ struct AttentionButton: View {
 #Preview {
     HStack {
         AttentionButton(size: .mini, title: "Mini", action: {})
-        AttentionButton(size: .normal, title: "Normal", action: {})
+        AttentionButton(size: .medium, title: "Normal", action: {})
         AttentionButton(size: .large, title: "Large", action: {})
     }
     .padding()

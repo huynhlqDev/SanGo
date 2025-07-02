@@ -31,7 +31,7 @@ struct IconButton: View {
         Color.gray.opacity(0.5)
         HStack {
             IconButton(style: .normal, size: .mini, image: "map", action: {})
-            IconButton(style: .light, size: .normal, image: "map", action: {})
+            IconButton(style: .light, size: .medium, image: "map", action: {})
             IconButton(style: .attention, size: .large, image: "map", action: {})
             IconButton(style: .danger, size: .large, image: "map", action: {})
         }.padding(.horizontal)

@@ -35,7 +35,7 @@ struct LightButton: View {
 #Preview {
     HStack {
         LightButton(size: .mini, title: "Mini", action: {})
-        LightButton(size: .normal, title: "Normal", action: {})
+        LightButton(size: .medium, title: "Normal", action: {})
         LightButton(size: .large, title: "Large", action: {})
     }.padding()
 }

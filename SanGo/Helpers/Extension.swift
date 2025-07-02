@@ -20,6 +20,12 @@ extension Color {
     static var color3: Color = Color(hex:"#86B6F6")
     static var color4: Color = Color(hex:"#176B87")
 
+    //collection 2: https://colorhunt.co/palette/050c9c3572ef3abef9a7e6ff
+    static var sango1: Color = Color(hex:"#050C9C")
+    static var sango2: Color = Color(hex:"#3572EF")
+    static var sango3: Color = Color(hex:"#3ABEF9")
+    static var sango4: Color = Color(hex:"#A7E6FF")
+
     init(hex: String) {
         let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
         var int = UInt64()

@@ -13,21 +13,23 @@ struct SearchListView: View {
     var body: some View {
         VStack {
             SearchControlView(viewModel: viewModel)
-            ScrollView(.vertical, showsIndicators: false) {
-                ForEach(viewModel.fields, id: \.id) { field in
+            List(viewModel.fields) { field in
+                VStack (spacing: 0) {
                     FieldCard(field: field, action: {
                         print("tap")
                     })
-                        .cornerRadius(8)
-                        .shadow(color: .black.opacity(0.1), radius: 8)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 8)
-                                .stroke(Color.gray.opacity(0.5), lineWidth: 0.5)
-                        )
-                        .padding(.horizontal, 10)
-                        .padding(.vertical, 4)
+
+                    Color.gray.opacity(0.1).frame(height: 4)
+                        .padding(.horizontal, -8)
                 }
+                .padding(.horizontal, 8)
+                .padding(.bottom, 8)
+                .listRowSeparator(.hidden)
+                .listRowInsets(EdgeInsets())
+
             }
+            .listStyle(.plain)
+            .scrollIndicators(.hidden)
             .task {
                 viewModel.fetchFields()
             }

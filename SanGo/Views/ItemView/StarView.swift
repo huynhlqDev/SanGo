@@ -15,7 +15,7 @@ struct StarView: View {
             ForEach(1...5, id: \.self) { index in
                 Image(systemName: index <= starValue ? "star.fill" : "star")
                     .resizable()
-                    .foregroundColor(index <= starValue ? .yellow : .gray)
+                    .foregroundColor(index <= starValue ? .star_rating : .gray)
                     .frame(width: 12, height: 12)
             }
         }

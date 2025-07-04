@@ -10,26 +10,27 @@ import SwiftUI
 struct PrimaryButton: View {
     var size: ButtonSize = .medium
     var title: String
-    var disabled: Bool = false
+    var disabled: Bool = true
     var action: () -> Void
 
     var body: some View {
-        Text(title)
-            .font(.callout).bold()
-            .shadow(color: .black.opacity(0.2), radius: 2)
-            .foregroundStyle(.white)
-            .frame(maxWidth: .infinity)
-            .frame(height: size.height)
-            .padding(10)
-            .background(Color.sango2)
-            .cornerRadius(22)
-            .shadow(color: Color.sango2.opacity(0.5), radius: 6, x: 0, y: 4)
-            .overlay(
-                RoundedRectangle(cornerRadius: 22)
-                    .stroke(Color.sango2.opacity(1), lineWidth: 1)
-            )
-            .onTapGesture(perform: action)
-            .disabled(disabled)
+        Button(action: action) {
+            Text(title)
+                .font(.callout).bold()
+                .shadow(color: .black.opacity(0.2), radius: 2)
+                .foregroundStyle(.white)
+                .frame(maxWidth: .infinity)
+                .frame(height: size.height)
+                .padding(10)
+                .background(Color.sango2)
+                .cornerRadius(22)
+                .shadow(color: .black.opacity(0.25), radius: 6, x: 0, y: 4)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 22)
+                        .stroke(.black.opacity(0.05), lineWidth: 2)
+                )
+        }
+        .buttonStyle(.plain)
     }
 }
 

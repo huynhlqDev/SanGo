@@ -62,7 +62,7 @@ enum ButtonSize {
         switch self {
         case .mini: 10.0
         case .medium: 14.0
-        case .large: 22.0
+        case .large: 28.0
         }
     }
 

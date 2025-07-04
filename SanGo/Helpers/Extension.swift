@@ -14,17 +14,31 @@ func asyncAfter(_ delay: Double, execute closure: @escaping () -> Void) {
 // MARK: COLOR
 // refer: https://colorhunt.co/
 extension Color {
-    //collection 1: https://colorhunt.co/palette/eef5ffb4d4ff86b6f6176b87
+    // Ccollection 1: https://colorhunt.co/palette/eef5ffb4d4ff86b6f6176b87
     static var color1: Color = Color(hex:"#EEF5FF")
     static var color2: Color = Color(hex:"#B4D4FF")
     static var color3: Color = Color(hex:"#86B6F6")
     static var color4: Color = Color(hex:"#176B87")
 
-    //collection 2: https://colorhunt.co/palette/050c9c3572ef3abef9a7e6ff
+    // Collection 2: https://colorhunt.co/palette/050c9c3572ef3abef9a7e6ff
     static var sango1: Color = Color(hex:"#050C9C")
     static var sango2: Color = Color(hex:"#3572EF")
     static var sango3: Color = Color(hex:"#3ABEF9")
-    static var sango4: Color = Color(hex:"#A7E6FF")
+    static var sango4: Color = Color(hex:"#4682A9")
+
+    // Collection 3 https://colorhunt.co/palette/fffbde91c8e4749bc24682a9
+    static var sango_yellow: Color = Color(hex:"#FFFBDE")
+    static var sango_blue: Color = Color(hex:"#91C8E4")
+    static var sango_sky: Color = Color(hex:"#EBF2FD")
+    static var sango_happy: Color = Color(hex:"#1C448A")
+
+    // Buttons
+    static var favorite_bg_outside: Color = Color(hex: "#E9F0F9")
+    static var favorite_bg_inside: Color = Color(hex: "#DAE3F9")
+    static var favorite_fg: Color = Color(hex: "#ADB9E2")
+
+    // Icon
+    static var star_rating: Color = Color(hex: "#D88337")
 
     init(hex: String) {
         let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)

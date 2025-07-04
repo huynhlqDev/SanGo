@@ -30,6 +30,7 @@ struct SearchMapView: View {
             }
             .onAppear(perform: locationManager.requestLocation)
             SearchControlView(viewModel: viewModel)
+                .background(.gray.opacity(0.2))
         }
         .navigationBarHidden(true)
     }

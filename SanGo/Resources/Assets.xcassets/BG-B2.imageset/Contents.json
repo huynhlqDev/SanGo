@@ -1,17 +1,15 @@
 {
   "images" : [
     {
-      "filename" : "Screenshot 2025-06-15 at 23.09.13.png",
+      "filename" : "BG-B2.jpg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Screenshot 2025-06-15 at 23.09.13 1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Screenshot 2025-06-15 at 23.09.13 2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

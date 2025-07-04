@@ -14,32 +14,30 @@ struct SearchControlView: View {
 
     // MARK: VIEW
     var body: some View {
-        VStack() {
-            SearchBar(provinceText: viewModel.selectedDistrict, onTapAction: {})
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 10) {
-                    TrailingIconButton(style: .light,
-                                       title: "Ngày",
-                                       image: "chevron.down",
-                                       imageSize: 8, action: pushFilterDetail)
-                    TrailingIconButton(style: .light,
-                                       title: "Khung giờ",
-                                       image: "chevron.down",
-                                       imageSize: 8, action: pushFilterDetail)
-                    TrailingIconButton(style: .light,
-                                       title: "Loại sân",
-                                       image: "chevron.down",
-                                       imageSize: 8, action: pushFilterDetail)
-                    TrailingIconButton(style: .light,
-                                       title: "Giá",
-                                       image: "chevron.down",
-                                       imageSize: 8, action: pushFilterDetail)
+        Group {
+            VStack(spacing: 12) {
+                HStack {
+                    SearchBar(provinceText: viewModel.selectedDistrict, onTapAction: {})
+
+                    if viewModel.displayMode == .list {
+                        // TODO: load image from API user infomation
+                        UserImageView(imageURL: URL(string: "https://i.pravatar.cc/100"))
+                            .padding(.horizontal, 8)
+                    }
                 }
+
+                // Filter collection
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 8) {
+                        FilterButton(title: "Ngày", action: pushFilterDetail)
+                        FilterButton(title: "Khung giờ", action: pushFilterDetail)
+                        FilterButton(title: "Loại sân", action: pushFilterDetail)
+                        FilterButton(title: "Giá tiền", action: pushFilterDetail)
+                    }
+                }.scrollClipDisabled(true)
             }
-            .scrollClipDisabled(true)
+            .padding(.horizontal, 16).padding(.vertical, 12)
         }
-        .padding()
-        .background(viewModel.displayMode == .list ? Color.color1 : .clear)
         .sheet(isPresented: $showFilterDetail) {
                 TimeSlotFilterView(dismiss: popFilterDetail, searchViewModel: viewModel)
                     .presentationDetents([.fraction(0.9)])

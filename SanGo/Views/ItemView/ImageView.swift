@@ -8,23 +8,39 @@
 import SwiftUI
 
 struct ImageView: View {
+    private let template: [String] = ["BG-1","BG-2","BG-3", "BG-B1", "BG-B2", "BG-N1", "BG-N2"]
+    var imageURL: URL? = nil
+
+
     var body: some View {
-        #if STUB
-        Image("field-bg")
-            .resizable()
-        #else
-        AsyncImage(url: URL(string: "https://cdn.dribbble.com/userupload/43477988/file/original-28711d65e2e8c47466e6e450b386d651.png?resize=2400x1800&vertical=center")) { image in
-            image
-                .resizable()
-        } placeholder: {
-            ProgressView()
+        Group {
+            if let imageURL = imageURL {
+                // Tải ảnh từ URL (iOS 15+)
+                AsyncImage(url: imageURL) { phase in
+                    if let image = phase.image {
+                        image
+                            .resizable()
+                            .scaledToFill()
+                    } else if phase.error != nil {
+                        Image(getRandomImageName())
+                            .resizable()
+                    } else {
+                        ProgressView()
+                    }
+                }
+            } else {
+                Image(getRandomImageName())
+                    .resizable()
+            }
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.gray.opacity(0.1))
-        #endif
+    }
+
+    private func getRandomImageName() -> String {
+        template.randomElement() ?? "BG-1"
     }
 }
 
 #Preview {
     ImageView()
+        .frame(width: .infinity, height: 170)
 }

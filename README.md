@@ -69,8 +69,8 @@
 
 ## ✍️ Tác giả
 
-- iOS Developer: [Tên bạn]
-- Thiết kế ý tưởng & sản phẩm: [Tên bạn nếu cùng]
+- iOS Developer: huynhlq
+- Thiết kế ý tưởng & sản phẩm: huynhlq
 
 ---
 

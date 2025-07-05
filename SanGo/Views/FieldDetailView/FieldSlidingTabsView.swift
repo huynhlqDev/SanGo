@@ -25,14 +25,14 @@ struct FieldSlidingTabsView: View {
                         VStack(spacing: 0) {
                             Text(tabs[index])
                                 .textCase(.uppercase)
-                                .font(.subheadline).bold()
-                                .foregroundColor(selectedIndex == index ? .blue : .black)
+                                .font(.caption).bold()
+                                .foregroundColor(selectedIndex == index ? Color(hex: "##C7514F") : .black)
                                 .padding(.vertical, 8)
                             // underline
                             ZStack {
                                 if selectedIndex == index {
                                     Capsule()
-                                        .fill(Color.blue)
+                                        .fill(Color(hex: "##C7514F"))
                                         .matchedGeometryEffect(
                                             id: "underline",
                                             in: underlineNamespace
@@ -47,8 +47,6 @@ struct FieldSlidingTabsView: View {
                     }
                 }
             }.padding(.horizontal, 16)
-
-            Color.gray.opacity(0.5).frame(height: 1)
         }
     }
 }

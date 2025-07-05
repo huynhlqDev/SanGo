@@ -88,14 +88,38 @@ struct FieldDetailView: View {
                             }.frame(width: 90)
                         }
                     }
-                    .padding(.top, 20).padding(.horizontal, 20)
+                    .padding(.horizontal, 20)
 
                     // SlidingView
-                    FieldSlidingTabsView(tabs: Tab.getArrayValue(), selectedIndex: $selectedSlideIndex)
-                        .padding(.vertical, 12)
-                    Group {
+                    FieldSlidingTabsView(
+                        tabs: Tab.getArrayValue(),
+                        selectedIndex: $selectedSlideIndex
+                    )
+                    .padding(.vertical, 12)
+                    Group { // TODO: add content view
                         if selectedSlideIndex == 0 {
-                            Text("Chi tiết")
+                            VStack(spacing: 12) {
+                                FeaturesView(
+                                    title:"Đặt điểm",
+                                    items: [
+                                    "Gần trung tâm",
+                                    "Sân 5 tiêu chuẩn",
+                                    "Phù hợp tổ chức giải nhỏ",
+                                    "Không gian thoáng đãng",
+                                ])
+                                .padding(.horizontal)
+
+                                FeaturesView(
+                                    title:"Tiện nghi",
+                                    items: [
+                                    "Bãi đỗ xe free",
+                                    "Nhà vệ sinh riêng",
+                                    "Đèn chiếu sáng ban đêm",
+                                    "Khu bán nước giải khát",
+                                    "Shop quần áo"
+                                ])
+                                .padding(.horizontal)
+                            }
                         } else if selectedSlideIndex == 1 {
                             Text("Dịch vụ")
 
@@ -107,11 +131,12 @@ struct FieldDetailView: View {
 
                 } // END SCROLL VIEW
                 .safeAreaInset(edge: .bottom) {
-                    PrimaryButton(size: .large , title: "Đặt sân", action: {})
+                    PrimaryButton(size: .large , title: "Đặt sân ngay", action: {})
                         .padding(.horizontal, 20).padding(.bottom, 40)
                 }
 
-            } // END ZSTACK VIEW
+            }
+            .background(Color(hex: "#F6F6F6")) // END ZSTACK VIEW
         }
         .ignoresSafeArea()
 

@@ -22,9 +22,9 @@ struct PrimaryButton: View {
                 .frame(maxWidth: .infinity)
                 .frame(height: size.height)
                 .padding(10)
-                .background(Color.sango2)
-                .cornerRadius(22)
-                .shadow(color: .black.opacity(0.25), radius: 6, x: 0, y: 4)
+                .background(Color.booking_button)
+                .cornerRadius(16)
+                .shadow(color: .booking_button.opacity(0.4), radius: 6, x: 0, y: 4)
                 .overlay(
                     RoundedRectangle(cornerRadius: 22)
                         .stroke(.black.opacity(0.05), lineWidth: 2)

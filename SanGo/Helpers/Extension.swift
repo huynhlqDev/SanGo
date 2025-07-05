@@ -36,6 +36,7 @@ extension Color {
     static var favorite_bg_outside: Color = Color(hex: "#E9F0F9")
     static var favorite_bg_inside: Color = Color(hex: "#DAE3F9")
     static var favorite_fg: Color = Color(hex: "#ADB9E2")
+    static var booking_button: Color = Color(hex: "#029063")
 
     // Icon
     static var star_rating: Color = Color(hex: "#D88337")

@@ -12,17 +12,40 @@ struct FieldDetailView: View {
     var field: FieldModel
     var rating: Int = 4 // TODO: Implement for fill
 
+    internal enum Tab: Int {
+        case detail = 0
+        case services = 1
+        case rating = 2
+
+        var title: String {
+            switch self {
+                case .detail:
+                return "Chi tiết"
+            case .services:
+                return "Dịch vụ"
+            case .rating:
+                return "Đánh giá"
+            }
+        }
+
+        static func getArrayValue() -> [String] {
+            [Tab.detail.title, Tab.services.title, Tab.rating.title]
+        }
+    }
+
     @State private var isFavorite: Bool = false
+    @State private var selectedSlideIndex = 0
+    @Namespace private var underlineNamespace
 
     var body: some View {
         GeometryReader { gr in
-            ZStack {
-                ScrollView(.vertical, showsIndicators: false) {
-                    // Image =====================================================
+            ZStack {// BEGIN ZSTACK VIEW
+                ScrollView(.vertical, showsIndicators: false) {// BEGIN SCROLL VIEW
+                    // Image
                     DynamicHeaderView(imageName: "BG-B1")
 
                     VStack(spacing: 16) {
-                        // Title and location =====================================================
+                        // Title and location
                         HStack() {
                             VStack(alignment: .leading, spacing: 8) {
                                 Text(field.name)
@@ -36,7 +59,7 @@ struct FieldDetailView: View {
                             Spacer()
                         }
 
-                        // SubInformation =====================================================
+                        // SubInformation
                         HStack {
                             VStack(alignment: .leading, spacing: 4) {
                                 Text("Thời gian")
@@ -64,15 +87,33 @@ struct FieldDetailView: View {
                                 })
                             }.frame(width: 90)
                         }
-                    }.padding(20)
-                }
+                    }
+                    .padding(.top, 20).padding(.horizontal, 20)
+
+                    // SlidingView
+                    FieldSlidingTabsView(tabs: Tab.getArrayValue(), selectedIndex: $selectedSlideIndex)
+                        .padding(.vertical, 12)
+                    Group {
+                        if selectedSlideIndex == 0 {
+                            Text("Chi tiết")
+                        } else if selectedSlideIndex == 1 {
+                            Text("Dịch vụ")
+
+                        } else if selectedSlideIndex == 2 {
+                            Text("đánh giá")
+
+                        }
+                    }
+
+                } // END SCROLL VIEW
                 .safeAreaInset(edge: .bottom) {
                     PrimaryButton(size: .large , title: "Đặt sân", action: {})
                         .padding(.horizontal, 20).padding(.bottom, 40)
                 }
-            }
-            .ignoresSafeArea()
+
+            } // END ZSTACK VIEW
         }
+        .ignoresSafeArea()
 
         // Custom toolbar
         .navigationBarBackButtonHidden(true)

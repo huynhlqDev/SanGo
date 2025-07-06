@@ -14,9 +14,9 @@ struct BackButtonCustom: View {
             dismiss()
         }) {
             Image(systemName: "arrow.left")
-                .font(.title2)
+                .font(.title)
                 .foregroundColor(.white)
-                .shadow(radius: 2)
+                .shadow(radius: 4)
         }
     }
 }

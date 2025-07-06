@@ -9,19 +9,24 @@ import SwiftUI
 import Foundation
 
 struct FieldDetailView: View {
+    // MARK: PROPERTIES
+    @State private var isFavorite: Bool = false
+    @State private var selectedSlideIndex = 0
+    @Namespace private var underlineNamespace
     var field: FieldModel
     var rating: Int = 4 // TODO: Implement for fill
 
+    // MARK: ENUM
     internal enum Tab: Int {
         case detail = 0
-        case services = 1
+        case openingHours = 1
         case rating = 2
 
         var title: String {
             switch self {
                 case .detail:
                 return "Chi tiết"
-            case .services:
+            case .openingHours:
                 return "Dịch vụ"
             case .rating:
                 return "Đánh giá"
@@ -29,23 +34,19 @@ struct FieldDetailView: View {
         }
 
         static func getArrayValue() -> [String] {
-            [Tab.detail.title, Tab.services.title, Tab.rating.title]
+            [Tab.detail.title, Tab.openingHours.title, Tab.rating.title]
         }
     }
 
-    @State private var isFavorite: Bool = false
-    @State private var selectedSlideIndex = 0
-    @Namespace private var underlineNamespace
-
+    // MARK: BODY
     var body: some View {
         GeometryReader { gr in
-            ZStack {// BEGIN ZSTACK VIEW
-                ScrollView(.vertical, showsIndicators: false) {// BEGIN SCROLL VIEW
-                    // Image
-                    DynamicHeaderView(imageName: "BG-B1")
-
+            ZStack {
+                ScrollView(.vertical, showsIndicators: false) {
+                    /// Image
+                    DynamicHeaderView(imageName: "BG-B1", baseHeight: gr.size.height/5)
                     VStack(spacing: 16) {
-                        // Title and location
+                        /// Title and location
                         HStack() {
                             VStack(alignment: .leading, spacing: 8) {
                                 Text(field.name)
@@ -59,7 +60,7 @@ struct FieldDetailView: View {
                             Spacer()
                         }
 
-                        // SubInformation
+                        /// SubInformation
                         HStack {
                             VStack(alignment: .leading, spacing: 4) {
                                 Text("Thời gian")
@@ -90,7 +91,7 @@ struct FieldDetailView: View {
                     }
                     .padding(.horizontal, 20)
 
-                    // SlidingView
+                    /// Sliding Tab view
                     FieldSlidingTabsView(
                         tabs: Tab.getArrayValue(),
                         selectedIndex: $selectedSlideIndex
@@ -110,33 +111,30 @@ struct FieldDetailView: View {
                                 .padding(.horizontal)
                             }
                         } else if selectedSlideIndex == 1 {
-                            Text("Dịch vụ")
+                            Text("khung giờ hoạt dộng + giá tiền")
 
                         } else if selectedSlideIndex == 2 {
-                            Text("đánh giá")
-
+                            Text("Các bình luận đánh giá của khác hàng")
                         }
                     }
-
-                } // END SCROLL VIEW
-                .safeAreaInset(edge: .bottom) {
-                    PrimaryButton(size: .large , title: "Đặt sân ngay", action: {})
-                        .padding(.horizontal, 20).padding(.bottom, 40)
                 }
 
+                /// Back button
+                HStack {
+                    BackButtonCustom()
+                    Spacer()
+                }
+                .padding()
+                .frame(maxWidth: .infinity)
+                .background(.clear)
+                .offset(x: 0, y: -gr.size.height/2 + 8)
+
+                /// Booking button
+                PrimaryButton(size: .large , title: "Đặt sân ngay", action: {})
+                    .padding(.horizontal, 20).padding(.bottom, 40)
+                    .offset(y: gr.size.height/2)
             }
             .background(Color(hex: "#F6F6F6")) // END ZSTACK VIEW
-        }
-        .ignoresSafeArea()
-
-        // Custom toolbar
-        .navigationBarBackButtonHidden(true)
-        .toolbarBackground(.hidden, for: .navigationBar) // ✅ hide background nav bar
-        .toolbar(.hidden, for: .tabBar) // 👈 hide tabbar
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                BackButtonCustom()
-            }
         }
     }
 }

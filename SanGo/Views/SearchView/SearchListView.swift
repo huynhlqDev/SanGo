@@ -10,15 +10,34 @@ import CoreLocation
 
 struct SearchListView: View {
     // MARK: PROPERTIES
+    /// Data
     @ObservedObject var viewModel: SearchViewModel
-    @State private var isShowFieldDetail: Bool = false
+
+    /// State management values
+    @State private var isShowFieldDetail: FieldModel? = nil
     @State private var isShowSearchDetail: Bool = false
     @State private var isShowDateFilter: Bool = false
     @State private var isShowTimeFilter: Bool = false
     @State private var isShowFieldTypeFilter: Bool = false
     @State private var isShowPriceFilter: Bool = false
 
+    /// State management dynamic SearchBar values
+    @State private var pannerText: String = "Tìm kiếm sân"
+    @State private var pannerIndex: Int = 0
+    @State private var textOffset: CGFloat = 0
+
+    /// Default values
     private let searchButtonHeight: CGFloat = 48
+    private let timer = Timer.publish(
+        every: 2,
+        on: .main,
+        in: .common
+    ).autoconnect()
+    private let pannerTextList: [String] = [
+        "Tìm kiếm sân",
+        "Thêm thành phố",
+        "Thêm phường,xã"
+    ]
 
 
     // MARK: BODY
@@ -66,7 +85,8 @@ struct SearchListView: View {
                             HStack {
                                 Image(systemName: "magnifyingglass")
                                     .bold()
-                                Text("Tìm kiếm sân")
+                                Text(pannerText)
+                                    .offset(CGSize(width: 0, height: textOffset))
                                 Spacer()
                             }
                             .font(.body)
@@ -87,10 +107,18 @@ struct SearchListView: View {
                 // HORIZONTAL FILTER
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
-                        FilterButton(title: "Ngày", action: {isShowDateFilter = true})
-                        FilterButton(title: "Khung giờ", action: {isShowTimeFilter = true})
-                        FilterButton(title: "Loại sân", action: {isShowFieldTypeFilter = true})
-                        FilterButton(title: "Giá tiền", action: {isShowPriceFilter = true})
+                        FilterButton(title: "Ngày", action: {
+                            withAnimation {isShowDateFilter = true}
+                        })
+                        FilterButton(title: "Khung giờ", action: {
+                            withAnimation {isShowTimeFilter = true}
+                        })
+                        FilterButton(title: "Loại sân", action: {
+                            withAnimation {isShowFieldTypeFilter = true}
+                        })
+                        FilterButton(title: "Giá tiền", action: {
+                            withAnimation {isShowPriceFilter = true}
+                        })
                     }
                     .padding(.horizontal).padding(.vertical, 4)
                 }.scrollClipDisabled()
@@ -109,7 +137,7 @@ struct SearchListView: View {
                 /// List  field
                 List(viewModel.fields) { field in
                     VStack (spacing: 0) {
-                        FieldCard(field: field, action: {isShowFieldDetail = true})
+                        FieldCard(field: field, action: {isShowFieldDetail = field})
                     }
                     .padding(.horizontal, 8)
                     .padding(.bottom, 8)
@@ -121,9 +149,26 @@ struct SearchListView: View {
             }
             .background(Color(hex: "#F6F6F6"))
 
+            // SHOW VIEW
+            .fullScreenCover(item: $isShowFieldDetail) { field in
+                FieldDetailView(field: field)
+            }
+
             // FETCH DATA
             .task {
                 viewModel.fetchFields()
+            }
+
+            // DYNAMIC SEARCH BAR HANDLER
+            .onReceive(timer) { _ in
+                pannerIndex = (pannerIndex + 1) % pannerTextList.count
+                pannerText = pannerTextList[pannerIndex]
+            }
+            .onChange(of: pannerText) { _,_ in
+                withAnimation(.easeOut) {
+                    textOffset = 10
+                    asyncAfter(0.15, execute: {textOffset = 0})
+                }
             }
         }
     }

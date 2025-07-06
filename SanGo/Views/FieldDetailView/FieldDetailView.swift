@@ -99,25 +99,14 @@ struct FieldDetailView: View {
                     Group { // TODO: add content view
                         if selectedSlideIndex == 0 {
                             VStack(spacing: 12) {
-                                FeaturesView(
-                                    title:"Đặt điểm",
-                                    items: [
-                                    "Gần trung tâm",
-                                    "Sân 5 tiêu chuẩn",
-                                    "Phù hợp tổ chức giải nhỏ",
-                                    "Không gian thoáng đãng",
-                                ])
+                                FeaturesAndFacilityView(
+                                    type: .features,
+                                    items: ["01", "02", "03", "04", "05", "06", "07"])
                                 .padding(.horizontal)
 
-                                FeaturesView(
-                                    title:"Tiện nghi",
-                                    items: [
-                                    "Bãi đỗ xe free",
-                                    "Nhà vệ sinh riêng",
-                                    "Đèn chiếu sáng ban đêm",
-                                    "Khu bán nước giải khát",
-                                    "Shop quần áo"
-                                ])
+                                FeaturesAndFacilityView(
+                                    type: .facility,
+                                    items: ["01", "02", "03", "04", "05", "06", "07"])
                                 .padding(.horizontal)
                             }
                         } else if selectedSlideIndex == 1 {

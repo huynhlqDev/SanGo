@@ -19,15 +19,15 @@ struct FilterButton: View {
                 Text(title)
                     .font(.callout)
                     .frame(maxWidth: .infinity)
-                    .frame(height: size.height)
+                    .frame(height: 22)
                     .shadow(color: .sango_happy, radius: 15, x: 2, y: 2)
                 Image(systemName: "chevron.down")
                     .resizable()
                     .frame(width: 10, height: 8)
             }
-            .foregroundStyle(Color.sango_happy)
+            .foregroundStyle(Color(hex: "#191919"))
             .padding(.vertical, 10).padding(.horizontal, 16)
-            .background(Color.sango_sky)
+            .background(Color(hex: "#FFFFFF"))
             .cornerRadius(8)
             .shadow(color: .black.opacity(0.05), radius: 6, x: 0, y: 4)
             .overlay(

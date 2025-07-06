@@ -32,8 +32,8 @@ struct UserImageView: View {
         }
         .frame(width: size, height: size)
         .clipShape(Circle())
-        .overlay(Circle().stroke(Color.gray.opacity(0.3), lineWidth: 1))
-        .shadow(radius: 2)
+        .overlay(Circle().stroke(Color.gray.opacity(0.5), lineWidth: 1))
+        .shadow()
     }
 
     var placeholder: some View {

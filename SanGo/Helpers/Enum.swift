@@ -6,6 +6,46 @@
 //
 import SwiftUI
 
+// MARK: FACILITY
+enum Facility: String, CaseIterable, Identifiable {
+    
+    case freeParking = "01"
+    case carParking = "02"
+    case shower = "03"
+    case toilet = "04"
+    case gearRental = "05"
+    case qrPayment = "06"
+    case foodAndDrink = "07"
+
+    var id: String { rawValue }
+
+    var description: String { "\(emoji) \(label)" }
+
+    var label: String {
+        switch self {
+        case .freeParking: "Bãi xe miễn phí"
+        case .carParking: "Bãi đỗ ô tô"
+        case .shower: "Phòng tắm"
+        case .toilet: "Nhà vệ sinh"
+        case .gearRental: "Thuê giày, quần áo"
+        case .qrPayment: "QR thanh toán"
+        case .foodAndDrink: "Phục vụ nước, đồ ăn"
+        }
+    }
+
+    var emoji: String {
+        switch self {
+        case .freeParking: return "🅿️"
+        case .carParking: return "🚗"
+        case .shower: return "🚿"
+        case .toilet: return "🚻"
+        case .gearRental: return "👕"
+        case .qrPayment: return "💳"
+        case .foodAndDrink: return "🍽️"
+        }
+    }
+}
+
 // MARK: DisplayMode
 enum DisplayMode {
     case list

@@ -101,6 +101,14 @@ extension View {
                 .stroke(Color.gray.opacity(opacity), lineWidth: 1)
             )
     }
+
+    func shadow() -> some View {
+        self.shadow(radius: 6, x: 2, y:  2)
+    }
+
+    func darkShadow() -> some View {
+        self.shadow(color: .black, radius: 6, x: 2, y:  2)
+    }
 }
 
 // MARK: NAVIGATION CUSTOM

@@ -7,20 +7,25 @@
 
 import SwiftUI
 
-struct FeaturesView: View {
-    var title: String
+struct FeaturesAndFacilityView: View {
+    enum TypeView {
+        case features
+        case facility
+    }
+    var type: TypeView
     var items: [String]
-    @State private var leadingItems: [String] = []
-    @State private var trailingItems: [String] = []
+    @State private var didAppear: Bool = false
+    @State private var leadingItems: [Facility] = []
+    @State private var trailingItems: [Facility] = []
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text(title).font(.headline).bold()
+            Text(getTitle()).font(.headline).bold()
             HStack {
                 // Leading content
                 VStack(alignment: .leading) {
                     ForEach(leadingItems.indices, id: \.self) { index in
-                        getItemText(text: leadingItems[index])
+                        getItemText(with: leadingItems[index])
                     }
                 }
                 Spacer()
@@ -28,7 +33,7 @@ struct FeaturesView: View {
                 //Trailing content
                 VStack(alignment: .leading) {
                     ForEach(trailingItems.indices, id: \.self) { index in
-                        getItemText(text: trailingItems[index])
+                        getItemText(with: trailingItems[index])
                     }
 
                     // Odd quantity, last item has no pair
@@ -43,13 +48,35 @@ struct FeaturesView: View {
         .background(Color(hex: "#FFFFFF"))
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .shadow(color: .gray.opacity(0.2), radius: 8, x: 0, y: 1)
-        .onAppear(perform: allocateItems)
+        .onAppear {
+            if !didAppear {
+                didAppear = true
+                allocateItems()
+            }
+        }
+
     }
 
-    private func getItemText(text: String) -> some View {
+    private func getTitle() -> String {
+        switch type {
+        case .features: "Đặt điểm"
+        case .facility: "Tiện ích"
+        }
+    }
+
+    private func getItemText(with item: Facility) -> some View {
         HStack {
-            Image(systemName: "checkmark").foregroundStyle(Color.booking_button)
-            Text(text).font(.subheadline).foregroundStyle(Color(hex: "#452427"))
+            switch type {
+            case .features:
+                Image(systemName: "checkmark").foregroundStyle(Color.booking_button)
+                Text(item.label)
+                    .font(.subheadline)
+                    .foregroundStyle(Color(hex: "#452427"))
+            case .facility:
+                Text(item.description)
+                    .font(.subheadline)
+                    .foregroundStyle(Color(hex: "#452427"))
+            }
         }.padding(2)
     }
 
@@ -57,12 +84,10 @@ struct FeaturesView: View {
         leadingItems = items.enumerated()
             .filter { $0.offset % 2 == 0 }
             .map { $0.element }
+            .map { Facility(rawValue: $0)!}
         trailingItems = items.enumerated()
             .filter { $0.offset % 2 != 0 }
             .map { $0.element }
+            .map { Facility(rawValue: $0)!}
     }
-}
-
-#Preview {
-    FeaturesView(title: "", items: ["Item 1", "Item 2", "Item 3", "Item 4", "Item 5"])
 }

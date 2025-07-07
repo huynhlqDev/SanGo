@@ -10,7 +10,6 @@ import CoreLocation
 
 struct FieldCard: View {
     var field: FieldModel
-    var action: () -> Void
     var starCount: Int = 4 // TODO: Implement for fill
 
     @State private var isFavorite: Bool = false
@@ -70,7 +69,6 @@ struct FieldCard: View {
             }.padding(.horizontal)
         }
         .padding(.bottom)
-        .onTapGesture(perform: action)
     }
 }
 
@@ -82,5 +80,5 @@ struct FieldCard: View {
         location: CLLocationCoordinate2D(latitude: Double(10.7702), longitude: Double(106.6597)),
         imagesUrl: [],
         availableTimeSlots: []
-    ), action: {})
+    ))
 }

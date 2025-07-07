@@ -26,10 +26,10 @@ struct SwitchModeButton: View {
         }
         .foregroundStyle(.white)
         .frame(height: size.height)
-        .padding(12)
+        .padding(.vertical, 8).padding(.horizontal, 12)
         .background(.black)
         .cornerRadius(22)
-        .shadow(color: .black.opacity(0.3), radius: 6, x: 0, y: 4)
+        .shadow()
         .overlay(
             RoundedRectangle(cornerRadius: 22)
                 .stroke(Color.black.opacity(0.3), lineWidth: 1)

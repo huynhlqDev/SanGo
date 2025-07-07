@@ -14,7 +14,6 @@ struct SearchListView: View {
     @ObservedObject var viewModel: SearchViewModel
 
     /// State management values
-    @State private var isShowFieldDetail: FieldModel? = nil
     @State private var isShowSearchDetail: Bool = false
     @State private var isShowDateFilter: Bool = false
     @State private var isShowTimeFilter: Bool = false
@@ -136,23 +135,18 @@ struct SearchListView: View {
 
                 /// List  field
                 List(viewModel.fields) { field in
-                    VStack (spacing: 0) {
-                        FieldCard(field: field, action: {isShowFieldDetail = field})
-                    }
-                    .padding(.horizontal, 8)
-                    .padding(.bottom, 8)
-                    .listRowSeparator(.hidden)
-                    .listRowInsets(EdgeInsets())
-
+                    FieldCard(field: field)
+                        .background(
+                            NavigationLink("", destination: FieldDetailView(field: field))
+                        )
+                        .padding(.horizontal, 8)
+                        .padding(.bottom, 8)
+                        .listRowSeparator(.hidden)
+                        .listRowInsets(EdgeInsets())
                 }
                 .listStyle(.plain)
             }
             .background(Color(hex: "#F6F6F6"))
-
-            // SHOW VIEW
-            .fullScreenCover(item: $isShowFieldDetail) { field in
-                FieldDetailView(field: field)
-            }
 
             // FETCH DATA
             .task {

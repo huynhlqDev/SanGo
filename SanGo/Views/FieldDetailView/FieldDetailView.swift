@@ -119,20 +119,25 @@ struct FieldDetailView: View {
                     }
                 }
 
-                /// Back button
-                HStack {
-                    BackButtonCustom()
-                    Spacer()
-                }
-                .padding()
-                .frame(maxWidth: .infinity)
-                .background(.clear)
-                .offset(x: 0, y: -gr.size.height/2 + 8)
-
                 /// Booking button
                 PrimaryButton(size: .large , title: "Đặt sân ngay", action: {})
                     .padding(.horizontal, 20).padding(.bottom, 40)
                     .offset(y: gr.size.height/2)
+
+
+                /// Custom toolbar
+                .navigationBarBackButtonHidden()
+                .toolbarBackground(.hidden, for: .navigationBar)
+                .toolbar(.hidden, for: .tabBar)
+                .toolbar {
+                    /// Back button
+                    ToolbarItem(placement: .topBarLeading) {
+                        HStack {
+                            Color.clear.frame(width: 0, height: 0)
+                            BackButtonCustom()
+                        }
+                    }
+                }
             }
             .background(Color(hex: "#F6F6F6")) // END ZSTACK VIEW
         }

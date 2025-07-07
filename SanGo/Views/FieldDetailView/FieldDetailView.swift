@@ -10,9 +10,11 @@ import Foundation
 
 struct FieldDetailView: View {
     // MARK: PROPERTIES
+    @Environment(\.dismiss) var dismiss
     @State private var isFavorite: Bool = false
     @State private var selectedSlideIndex = 0
     @Namespace private var underlineNamespace
+    @GestureState private var dragOffset = CGSize.zero
     var field: FieldModel
     var rating: Int = 4 // TODO: Implement for fill
 
@@ -139,7 +141,18 @@ struct FieldDetailView: View {
                     }
                 }
             }
-            .background(Color(hex: "#F6F6F6")) // END ZSTACK VIEW
+            .background(Color(hex: "#F6F6F6"))
+
+            // Swipe back to dismiss view
+            .gesture(
+                DragGesture().updating($dragOffset) { value, _, _ in
+                    let isLeadingStart = value.startLocation.x < 10
+                    let isToRight = value.translation.width > 80
+                    if isToRight && isLeadingStart {
+                        dismiss()
+                    }
+                }
+            )
         }
     }
 }

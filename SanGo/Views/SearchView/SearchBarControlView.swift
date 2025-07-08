@@ -149,6 +149,22 @@ struct SearchBarControlView: View {
                 horizontalFilter.scrollClipDisabled()
             }
             .transition(.move(edge: .top).combined(with: .opacity))
+
+            .sheet(isPresented: $isShowSearchDetail) {
+                // TODO: $isShowSearchDetail
+            }
+            .sheet(isPresented: $isShowDateFilter) {
+                // TODO: $$isShowDateFilter
+            }
+            .sheet(isPresented: $isShowTimeFilter) {
+                // TODO: $isShowTimeFilter
+            }
+            .sheet(isPresented: $isShowFieldTypeFilter) {
+                // TODO: $isShowFieldTypeFilter
+            }
+            .sheet(isPresented: $isShowPriceFilter) {
+                // TODO: $isShowPriceFilter
+            }
         }
     }
 }

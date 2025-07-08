@@ -19,6 +19,7 @@ struct SearchMapView: View {
         )
     )
 
+    // MARK: BODY
     var body: some View {
         ZStack(alignment: .top) {
             Map(position: $cameraPosition) {
@@ -29,8 +30,9 @@ struct SearchMapView: View {
                 MapCompass()
             }
             .onAppear(perform: locationManager.requestLocation)
-            SearchControlView(viewModel: viewModel)
-                .background(.gray.opacity(0.2))
+            .background(.gray.opacity(0.2))
+
+            SearchBarControlView(viewModel: viewModel, searchBarControlHidden: false)
         }
         .navigationBarHidden(true)
     }
@@ -47,8 +49,4 @@ struct SearchMapView: View {
             )
         )
     }
-}
-
-#Preview {
-    SearchMapView(viewModel: SearchViewModel())
 }

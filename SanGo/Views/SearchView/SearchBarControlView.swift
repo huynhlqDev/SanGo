@@ -11,13 +11,14 @@ struct SearchBarControlView: View {
     // MARK: PROPERTIES
     /// Data
     @ObservedObject var viewModel: SearchViewModel
+    @State private var dateFilterValue: Date = Date.now
 
     /// State for layout view
     var searchBarControlHidden: Bool = false
 
     /// State management values
     @State private var isShowSearchDetail: Bool = false
-    @State private var isShowDateFilter: Bool = false
+    @State private var isShowDateFilter: Bool = true
     @State private var isShowTimeFilter: Bool = false
     @State private var isShowFieldTypeFilter: Bool = false
     @State private var isShowPriceFilter: Bool = false
@@ -78,7 +79,7 @@ struct SearchBarControlView: View {
                 /// Search field
                 ZStack {
                     Button(action: {
-                        //TODO: create a action to show search view
+                        isShowSearchDetail = true
                         print("Search field tapped")
                     }, label: {
                         HStack {
@@ -136,6 +137,25 @@ struct SearchBarControlView: View {
         }
     }
 
+    private var dateFilter: some View {
+        VStack {
+            CustomCalendarView(selectedDate: $dateFilterValue)
+            Spacer()
+        }
+    }
+
+    private var timeFilter: some View {
+        Text("Ahii")
+    }
+
+    private var fieldTypeFilter: some View {
+        Text("Ahii")
+    }
+
+    private var priceFilter: some View {
+        Text("Ahii")
+    }
+
     var body: some View {
         if !searchBarControlHidden {
             VStack {
@@ -150,21 +170,30 @@ struct SearchBarControlView: View {
             }
             .transition(.move(edge: .top).combined(with: .opacity))
 
-            .sheet(isPresented: $isShowSearchDetail) {
-                // TODO: $isShowSearchDetail
+            .sheet(isPresented: $isShowSearchDetail, onDismiss: saveSearchQuery) {
+                dateFilter
+                    .presentationDetents([.fraction(0.99)])
+                    .interactiveDismissDisabled()
             }
-            .sheet(isPresented: $isShowDateFilter) {
-                // TODO: $$isShowDateFilter
+            .sheet(isPresented: $isShowDateFilter, onDismiss: saveSearchQuery) {
+                dateFilter
+                    .presentationDetents([.fraction(0.9)])
             }
-            .sheet(isPresented: $isShowTimeFilter) {
-                // TODO: $isShowTimeFilter
+            .sheet(isPresented: $isShowTimeFilter, onDismiss: saveSearchQuery) {
+                timeFilter
+                    .presentationDetents([.fraction(0.9)])
             }
-            .sheet(isPresented: $isShowFieldTypeFilter) {
-                // TODO: $isShowFieldTypeFilter
+            .sheet(isPresented: $isShowFieldTypeFilter, onDismiss: saveSearchQuery) {
+                fieldTypeFilter
+                    .presentationDetents([.fraction(0.2)])
             }
-            .sheet(isPresented: $isShowPriceFilter) {
-                // TODO: $isShowPriceFilter
+            .sheet(isPresented: $isShowPriceFilter, onDismiss: saveSearchQuery) {
+                priceFilter
+                    .presentationDetents([.fraction(0.5)])
             }
         }
+    }
+    private func saveSearchQuery() {
+        // TODO: bind data to view model
     }
 }

@@ -83,8 +83,10 @@ struct CustomCalendarView: View {
                 }
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
-            .frame(maxHeight: 380)
+
+            Spacer()
         }
+        .frame(maxWidth: .infinity)
     }
 }
 
@@ -94,8 +96,7 @@ struct CustomCalendarView_Previews: View {
     var body: some View {
         VStack {
             CustomCalendarView(selectedDate: $selectedDate)
-            Spacer()
-        }.frame(height: .infinity/2)
+        }.frame(height: 500)
     }
 }
 

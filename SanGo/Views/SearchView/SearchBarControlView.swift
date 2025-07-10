@@ -18,7 +18,7 @@ struct SearchBarControlView: View {
 
     /// State management values
     @State private var isShowSearchDetail: Bool = false
-    @State private var isShowDateFilter: Bool = true
+    @State private var isShowDateFilter: Bool = false
     @State private var isShowTimeFilter: Bool = false
     @State private var isShowFieldTypeFilter: Bool = false
     @State private var isShowPriceFilter: Bool = false
@@ -138,10 +138,46 @@ struct SearchBarControlView: View {
     }
 
     private var dateFilter: some View {
-        VStack {
+        VStack(spacing: 0) {
+            VStack(spacing: 0) {
+                HStack {
+                    Text("Chọn ngày").font(.title3)
+                    Spacer()
+                    Button(action: {
+                        isShowDateFilter = false
+                    }) {
+                        Image(systemName: "xmark")
+                            .foregroundColor(.gray)
+                            .frame(width: 12, height: 12)
+                    }
+                }
+                .frame(width: .infinity, height: 50)
+
+                Capsule()
+                    .fill(.gray.opacity(0.5))
+                    .frame(height: 1.5)
+            }
+            .padding(.horizontal, 22)
+
             CustomCalendarView(selectedDate: $dateFilterValue)
+                .background(.white)
+                .frame(height: 400)
+                .padding()
+                .clipShape(.buttonBorder)
+
             Spacer()
+
+            HStack {
+                NormalButton(title: "Đặt lại", action: {
+                    dateFilterValue = Date()
+                })
+                DangerButton(title: "Áp dụng", action: {
+                    isShowDateFilter = false
+                })
+            }
+            .padding()
         }
+        .background(Color(hex: "#F0F6FB"))
     }
 
     private var timeFilter: some View {

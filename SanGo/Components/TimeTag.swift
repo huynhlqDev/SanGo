@@ -15,7 +15,7 @@ struct TimeTag: View {
     var body: some View {
         Text(label)
             .padding(4)
-            .font(.headline)
+            .font(.subheadline)
             .foregroundStyle(isReady ? .green : .red)
             .background(isReady ? .green.opacity(0.1) : .red.opacity(0.1))
             .cornerRadius(4)

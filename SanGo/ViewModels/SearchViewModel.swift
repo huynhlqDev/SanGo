@@ -11,26 +11,6 @@ import Combine
 import CoreLocation
 //import FirebaseFirestore
 
-// MARK: ENUM
-enum SearchViewMode {
-    case list
-    case map
-
-    var image: String {
-        switch self {
-            case .list: return "map"
-            case .map: return "checklist.unchecked"
-        }
-    }
-
-    var switchTextButton: String {
-        switch self {
-        case .list: "Bản đồ"
-        case .map: "Danh sách"
-        }
-    }
-}
-
 class SearchViewModel: ObservableObject {
     // MARK: PROPERTIES
 
@@ -38,12 +18,11 @@ class SearchViewModel: ObservableObject {
     //private let db = Firestore.firestore()
 
     // INPUT FROM UI
-    @Published var displayMode: SearchViewMode = .list
+    @Published var displayMode: DisplayMode = .list
     @Published var searchText: String = ""
-    @Published var selectedDistrict: String = "Thành phố"
-    @Published var selectedTimeSlot: String = "Thời gian"
-    @Published var selectedFielType: String = "Loại sân"
-    @Published var selectedMaxPrice: String = "Giá"
+    @Published var selectedDistrict: String? = nil
+    @Published var selectedTimeSlot: [String] = []
+    @Published var selectedFielType: Int? = nil
 
     // OUTPUT
     @Published var fields: [FieldModel] = []
@@ -54,14 +33,13 @@ class SearchViewModel: ObservableObject {
 
 // MARK: PRIVATE METHOD
     private func setupBindings() {
-        Publishers.CombineLatest4(
+        Publishers.CombineLatest3(
             $searchText,
             $selectedDistrict,
-            $selectedTimeSlot,
-            $selectedMaxPrice
+            $selectedTimeSlot
         )
         .debounce(for: 0.3, scheduler: DispatchQueue.main)
-        .sink { [weak self] _, _, _, _ in
+        .sink { [weak self] _, _, _ in
             guard let self else { return }
             self.fetchFields()
         }
@@ -88,8 +66,8 @@ class SearchViewModel: ObservableObject {
 
             let timeSlots: [TimeSlotModel] = entity.availableTimeSlots.compactMap { slot in
                 guard
-                    let start = dateFormatter.date(from: slot.startTime),
-                    let end = dateFormatter.date(from: slot.endTime),
+                    let _ = dateFormatter.date(from: slot.startTime),
+                    let _ = dateFormatter.date(from: slot.endTime),
                     let priceInt = Int(slot.price)
                 else {
                     return nil

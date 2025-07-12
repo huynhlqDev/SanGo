@@ -11,7 +11,7 @@ struct AccountView: View {
     var image: Image?
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(alignment: .leading) {
                     HStack {
@@ -92,6 +92,8 @@ struct AccountView: View {
                 }
                 .padding()
             }
+            .toolbarBackground(Color.color1, for: .tabBar)
+            .toolbarBackground(.visible, for: .tabBar)
         }
     }
 }

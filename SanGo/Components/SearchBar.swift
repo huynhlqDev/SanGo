@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SearchBar: View {
-    var provinceText: String
+    var provinceText: String?
     var onTapAction: () -> Void
     private let pannerTextList: [String] = ["Thành phố", "Quận, huyện", "Phường, xã", "Đường phố"]
     private let timer = Timer.publish(every: 1.5, on: .main, in: .common).autoconnect()
@@ -19,13 +19,18 @@ struct SearchBar: View {
 
     var body: some View {
         HStack {
+            // Icon
             Image(systemName: "magnifyingglass")
-                .font(.title2)
-                .padding(.horizontal, 8)
+                .font(.body)
+                .padding(.horizontal, 4)
+                .foregroundStyle(.black)
+
+            // Title
             VStack {
-                Text(provinceText)
+                Text("Tìm kiếm sân")
                     .font(.subheadline).bold()
                     .frame(maxWidth: .infinity, alignment: .leading)
+                    .foregroundStyle(.black)
                 HStack(spacing: 0) {
                     Text("Thêm ")
                     Text(pannerText)
@@ -36,9 +41,15 @@ struct SearchBar: View {
                 .foregroundStyle(.gray)
             }
         }
-        .foregroundStyle(.black)
-        .enableBorder()
         .frame(maxWidth: .infinity)
+        .padding(6)
+        .background(.white)
+        .cornerRadius(22)
+        .shadow(color: .black.opacity(0.1), radius: 6, x: 0, y: 4)
+        .overlay(
+            RoundedRectangle(cornerRadius: 22)
+                .stroke(Color.black.opacity(0.3), lineWidth: 1)
+        )
         .onReceive(timer) { _ in
             pannerIndex = (pannerIndex + 1) % pannerTextList.count
             pannerText = pannerTextList[pannerIndex]
@@ -53,7 +64,3 @@ struct SearchBar: View {
     }
 
 }
-
-//#Preview {
-//    SearchBar(provinceText: "Hà Nội", onTapAction: { print("Tapped")})
-//}

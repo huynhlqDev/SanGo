@@ -20,6 +20,7 @@ struct FieldCard: View {
                 GeometryReader { gr in
                     // Field avatar
                     ImageView()
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
                     // Favorite button
                     FavoriteButton(isSelected: $isFavorite).position(x: gr.size.width - 28, y: 24)
                 }
@@ -27,8 +28,8 @@ struct FieldCard: View {
             .frame(height: 160).frame(maxWidth: .infinity)
 
             // Title
-            HStack() {
-                VStack(alignment: .leading, spacing: 2) {
+            HStack {
+                VStack(alignment: .leading) {
                     Text(field.name)
                         .font(.headline)
                         .lineLimit(2).truncationMode(.tail)
@@ -36,36 +37,15 @@ struct FieldCard: View {
                         .font(.subheadline)
                         .lineLimit(1).truncationMode(.tail)
                         .foregroundColor(.gray)
+                    HStack {
+                        Image(systemName: "clock.fill")
+                            .font(.footnote)
+                        Text("5h30 - 22h30")
+                            .font(.footnote)
+                            .lineLimit(1)
+                    }
                 }
                 Spacer()
-            }.padding(.horizontal)
-
-            // Subinformation
-            HStack {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("Thời gian")
-                        .font(.caption)
-                        .foregroundColor(.gray)
-                    Text("5h30 - 22h30")
-                        .font(.caption).bold()
-                        .lineLimit(1)
-                        .frame(height: 12)
-                }
-
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("Đánh giá")
-                        .font(.caption)
-                        .foregroundColor(.gray)
-                    StarView(starValue: starCount)
-                }.padding(.horizontal)
-
-                Spacer()
-
-                PrimaryButton(title: "Đặt sân", action: {
-                    // TODO: implement action for button
-                    print("Book tapped")
-                }).frame(width: 90)
-
             }.padding(.horizontal)
         }
         .padding(.bottom)

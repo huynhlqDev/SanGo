@@ -10,7 +10,6 @@ import SwiftUI
 
 @main
 struct SanGoApp: App {
-    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @Environment(\.scenePhase) private var scenePhase
 
 //    var sharedModelContainer: ModelContainer = {
@@ -41,7 +40,7 @@ struct SanGoApp: App {
                     }
                 }
                 .task {
-                    // Request location permission
+                    // TODO: Request location permission
                 }
         }
 //        .modelContainer(sharedModelContainer)

@@ -22,9 +22,9 @@ struct PrimaryButton: View {
                 .frame(maxWidth: .infinity)
                 .frame(height: size.height)
                 .padding(10)
-                .background(Color.booking_button)
+                .background(Color.sanGoApp01)
                 .cornerRadius(16)
-                .shadow(color: .booking_button.opacity(0.4), radius: 6, x: 0, y: 4)
+                .shadow(color: .sanGoApp01.opacity(0.4), radius: 6, x: 0, y: 4)
                 .overlay(
                     RoundedRectangle(cornerRadius: 22)
                         .stroke(.black.opacity(0.05), lineWidth: 2)

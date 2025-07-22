@@ -68,7 +68,7 @@ struct FeaturesAndFacilityView: View {
         HStack {
             switch type {
             case .features:
-                Image(systemName: "checkmark").foregroundStyle(Color.booking_button)
+                Image(systemName: "checkmark").foregroundStyle(Color.sanGoApp01)
                 Text(item.label)
                     .font(.subheadline)
                     .foregroundStyle(Color(hex: "#452427"))

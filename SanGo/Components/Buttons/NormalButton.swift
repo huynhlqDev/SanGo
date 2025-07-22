@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct NormalButton: View {
-    var size: ButtonSize = .large
+    var size: ButtonSize = .medium
     var title: String
     var disabled: Bool = false
     var action: () -> Void

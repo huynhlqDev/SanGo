@@ -18,10 +18,6 @@ struct SearchBarControlView: View {
 
     /// State management values
     @State private var isShowSearchDetail: Bool = false
-    @State private var isShowDateFilter: Bool = false
-    @State private var isShowTimeFilter: Bool = false
-    @State private var isShowFieldTypeFilter: Bool = false
-    @State private var isShowPriceFilter: Bool = false
 
     /// State management dynamic SearchBar values
     @State private var pannerText: String = "Tìm kiếm sân"
@@ -47,10 +43,15 @@ struct SearchBarControlView: View {
                 if viewModel.displayMode == .list {
                     /// Welcome - notification - avatar(optional)
                     HStack {
-                        /// Welcome
-                        Text("Welcome")
-                            .font(.title).bold()
-                            .foregroundStyle(.white)
+                        /// My location
+                        VStack(alignment: .leading) {
+                            Text("My location")
+                                .font(.caption)
+                                .foregroundStyle(.white)
+                            Text("Da Nang, Viet Nam")
+                                .font(.body)
+                                .foregroundStyle(.white)
+                        }
 
                         Spacer()
 
@@ -90,12 +91,12 @@ struct SearchBarControlView: View {
                             Spacer()
                         }
                         .font(.body)
-                        .foregroundStyle(.white)
+                        .foregroundStyle(Color(.systemGray))
                         .padding(.horizontal)
                     })
                 }
                 .frame(height: searchButtonHeight)
-                .background(Color(hex: "#1F7F7C"))
+                .background(.white)
                 .clipShape(.buttonBorder)
                 .shadow(color: .black.opacity(0.3), radius: 6, x: 0, y: 4)
                 .offset(x: 0, y: searchButtonHeight/2)
@@ -115,117 +116,18 @@ struct SearchBarControlView: View {
         )
     }
 
-    private var horizontalFilter: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack {
-                FilterButton(title: "Ngày", action: {
-                    withAnimation {isShowDateFilter = true}
-                })
-                FilterButton(title: "Khung giờ", action: {
-                    withAnimation {isShowTimeFilter = true}
-                })
-                FilterButton(title: "Loại sân", action: {
-                    withAnimation {isShowFieldTypeFilter = true}
-                })
-                FilterButton(title: "Giá tiền", action: {
-                    withAnimation {isShowPriceFilter = true}
-                })
-            }
-            .padding(.horizontal)
-            .padding(.vertical, 4)
-            .background(.clear)
-        }
-    }
-
-    private var dateFilter: some View {
-        VStack(spacing: 0) {
-            VStack(spacing: 0) {
-                HStack {
-                    Text("Chọn ngày").font(.title3)
-                    Spacer()
-                    Button(action: {
-                        isShowDateFilter = false
-                    }) {
-                        Image(systemName: "xmark")
-                            .foregroundColor(.gray)
-                            .frame(width: 12, height: 12)
-                    }
-                }
-                .frame(width: .infinity, height: 50)
-
-                Capsule()
-                    .fill(.gray.opacity(0.5))
-                    .frame(height: 1.5)
-            }
-            .padding(.horizontal, 22)
-
-            CustomCalendarView(selectedDate: $dateFilterValue)
-                .background(.white)
-                .frame(height: 400)
-                .padding()
-                .clipShape(.buttonBorder)
-
-            Spacer()
-
-            HStack {
-                NormalButton(title: "Đặt lại", action: {
-                    dateFilterValue = Date()
-                })
-                DangerButton(title: "Áp dụng", action: {
-                    isShowDateFilter = false
-                })
-            }
-            .padding()
-        }
-        .background(Color(hex: "#F0F6FB"))
-    }
-
-    private var timeFilter: some View {
-        Text("Ahii")
-    }
-
-    private var fieldTypeFilter: some View {
-        Text("Ahii")
-    }
-
-    private var priceFilter: some View {
-        Text("Ahii")
-    }
-
     var body: some View {
         if !searchBarControlHidden {
             VStack {
                 // SEARCHBAR
                 searchControl
                     .padding(.horizontal)
-                    .background(viewModel.displayMode == .list ? Color(hex: "#67CAAF") : Color.clear)
+                    .background(viewModel.displayMode == .list ? Color.sanGoApp01 : Color.clear)
                     .padding(.bottom, searchButtonHeight/2) // Cover search field - offset [y: 26]
-
-                // HORIZONTAL FILTER
-                horizontalFilter.scrollClipDisabled()
             }
             .transition(.move(edge: .top).combined(with: .opacity))
-
-            .sheet(isPresented: $isShowSearchDetail, onDismiss: saveSearchQuery) {
-                dateFilter
-                    .presentationDetents([.fraction(0.99)])
-                    .interactiveDismissDisabled()
-            }
-            .sheet(isPresented: $isShowDateFilter, onDismiss: saveSearchQuery) {
-                dateFilter
-                    .presentationDetents([.fraction(0.9)])
-            }
-            .sheet(isPresented: $isShowTimeFilter, onDismiss: saveSearchQuery) {
-                timeFilter
-                    .presentationDetents([.fraction(0.9)])
-            }
-            .sheet(isPresented: $isShowFieldTypeFilter, onDismiss: saveSearchQuery) {
-                fieldTypeFilter
-                    .presentationDetents([.fraction(0.2)])
-            }
-            .sheet(isPresented: $isShowPriceFilter, onDismiss: saveSearchQuery) {
-                priceFilter
-                    .presentationDetents([.fraction(0.5)])
+            .fullScreenCover(isPresented: $isShowSearchDetail) {
+                SearchFieldDetail(viewModel: viewModel)
             }
         }
     }

@@ -37,11 +37,15 @@ struct SearchListView: View {
                     LazyVStack {
                         ForEach(viewModel.fields, id: \.id) { field in
                             NavigationLink(destination: FieldDetailView(field: field)) {
-                                FieldCard(field: field)
-                                    .padding(.horizontal, 8)
-                                    .padding(.bottom, 8)
-                                    .listRowSeparator(.hidden)
-                                    .listRowInsets(EdgeInsets())
+                                VStack(spacing: 0) {
+                                    FieldCard(field: field)
+                                        .padding(.horizontal, 8)
+                                        .padding(.bottom, 8)
+                                        .listRowSeparator(.hidden)
+                                        .listRowInsets(EdgeInsets())
+                                    Color.gray.opacity(0.2)
+                                        .frame(height: 4)
+                                }
                             }
                         }
                     }

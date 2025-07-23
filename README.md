@@ -1,9 +1,9 @@
 # ⚽ SanGo App
 
 Ứng dụng di động giúp người dùng tìm và đặt sân bóng gần nhất, đồng thời hỗ trợ chủ sân quản lý lịch đặt và thông tin sân của mình.
-|Danh sách|Map|
+|Danh sách|Chi tiết|
 |-----|-----|
-|![IMG_6689](https://github.com/user-attachments/assets/b1e528a5-f2ec-4d32-8d23-4f9070f7739a)|![IMG_6690](https://github.com/user-attachments/assets/16c60246-f363-4d4d-bcf9-c6475542d68f)|
+|<img width="784" height="2278" alt="IMG_6764" src="https://github.com/user-attachments/assets/6e53631b-a0b6-44b4-9643-9a535d2ad7db" />|<img width="784" height="2278" alt="IMG_6767" src="https://github.com/user-attachments/assets/10339ad2-eb21-411a-9384-5d7fcc103a0e" />|
 
 ---
 
